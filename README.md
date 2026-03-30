@@ -27,6 +27,35 @@ A playful, educational food world designed for young children (ages 5–7). The 
 
 ---
 
+### Default State
+
+No food is pre-selected at load. The scene is calm and inviting — storybook-like.
+
+**Background scene:**
+- Warm-toned interior wall
+- Window with trees visible outside
+- Yellow curtains framing the window
+- Couch in the background
+- Simple family painting on the wall
+
+**Child character:** A small girl with black hair in pigtails, bow, and pink t-shirt. Soft smile. Style: rounded soft 3D/cartoon — big expressive eyes, friendly proportions. Use a placeholder initially; final must match this polished character style.
+
+**Table:**
+- Soft brown wooden texture
+- A plate centered in front of the child
+- Fork on the left, spoon on the right
+- 4 foods arranged naturally on the plate in a 2×2 layout (slight rotation, not rigid)
+
+---
+
+### Layout
+
+**Scene:** Cozy home interior. Child sits center as the permanent focal point, table in front.
+
+**Food arrangement:** 2×2 grid on the plate/table, styled naturally — slight rotation and organic spacing so it feels like real food placement, not a rigid CSS grid. Child stays center anchor at all times.
+
+---
+
 ### Color Palettes
 
 **Apple**
@@ -38,7 +67,7 @@ A playful, educational food world designed for young children (ages 5–7). The 
 
 **Broccoli**
 - Primary: `#50A846`
-- Secondary: `#2B8727`
+- Secondary: `#2B8827`
 - Rich green: `#006702`
 - Dark base: `#004800`
 
@@ -60,37 +89,36 @@ A playful, educational food world designed for young children (ages 5–7). The 
 
 **Headers / Food Names:** Alphabet Soup (Red Rooster Collection) — playful, rounded, child-friendly
 - Size: 64–72px
+- Loaded via Adobe Fonts: `https://use.typekit.net/lgt6kjj.css`
+- Fallback: `"Comic Neue", "Nunito", sans-serif`
 
 **Body / Fun Facts + Recommendations:** BC Civitas (Briefcase Type) — clean, readable, slightly softer serif
 - Size: 20–24px
-
----
-
-### Layout
-
-**Scene:** A cute kitchen/dining table. A child sits center as the focal point, with the table in front of them.
-
-**Food arrangement:** 2×2 grid on the table, styled naturally — slight rotation and organic spacing so it feels like real food placement, not a rigid grid. The child remains the center anchor of the composition.
+- Fallback: `"Georgia", serif`
 
 ---
 
 ### Hover Behavior
 
-When a child hovers over a food:
-- Selected food **scales up** (1.2–1.4×)
+**Transition timing:** 400–500ms, `ease-out`. Background shift slightly slower (~500ms). Nothing abrupt.
+
+When a food is hovered:
+- Selected food **scales up** (1.2–1.4×), smooth ease-out
 - Other foods **fade to ~30% opacity** and slightly shrink
-- Selected food gets a **cute animated face**
-- **Background subtly shifts** to the food's color palette
-- **Text appears:**
-  - Top: Food name
-  - Left: Fun fact
-  - Right: Recommendation
-- **Sound:**
+- Background **shifts to the food's color palette** (~500ms)
+- Selected food gets a **simple animated face:**
+  - Two small dot eyes + curved smiling mouth
+  - Eyes gently blink (slow, subtle)
+  - Face fades in smoothly on hover
+- **Text appears in separate screen areas** (fades in on hover, fades out on leave, never overlaps child or food):
+  - Top center → Food name
+  - Left side → Fun fact
+  - Right side → Recommendation
+- **Sound plays on hover** (short, subtle, non-overlapping):
   - Apple → soft crunch
   - Broccoli → light pop/boing
-  - Chips → crunchy crisp
+  - Chips → crispy crunch
   - Ice Cream → soft playful chime
-- **Animation feel:** soft, bouncy, and friendly — never sharp or fast
 
 ---
 
