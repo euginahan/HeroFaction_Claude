@@ -1,0 +1,81 @@
+.food-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 110px;
+  height: 110px;
+  transform: rotate(var(--rotation));
+  transition: transform 450ms ease-out, opacity 450ms ease-out, filter 450ms ease-out;
+  cursor: pointer;
+  user-select: none;
+}
+
+.food-emoji {
+  font-size: 72px;
+  line-height: 1;
+  display: block;
+  transition: transform 450ms ease-out;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+}
+
+/* Hovered state */
+.food-item.is-hovered .food-emoji {
+  transform: scale(1.3);
+  filter: drop-shadow(0 0 18px var(--glow)) drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+}
+
+/* Dimmed state (other food is hovered) */
+.food-item.is-dimmed {
+  opacity: 0.3;
+  transform: rotate(var(--rotation)) scale(0.88);
+}
+
+/* Face overlay */
+.food-face {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -54%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  opacity: 0;
+  transition: opacity 400ms ease-out;
+  pointer-events: none;
+}
+
+.food-face.face-visible {
+  opacity: 1;
+}
+
+.food-eyes {
+  display: flex;
+  gap: 10px;
+}
+
+.food-eye {
+  width: 7px;
+  height: 7px;
+  background: #222;
+  border-radius: 50%;
+  animation: blink 3.2s infinite;
+}
+
+.food-eye:nth-child(2) {
+  animation-delay: 0.08s;
+}
+
+.food-mouth {
+  width: 16px;
+  height: 8px;
+  border: 3px solid #222;
+  border-top: none;
+  border-radius: 0 0 16px 16px;
+}
+
+@keyframes blink {
+  0%, 88%, 100% { transform: scaleY(1); }
+  92%            { transform: scaleY(0.08); }
+}

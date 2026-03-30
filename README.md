@@ -138,7 +138,11 @@ When a food is hovered:
 
 ## AI Direction Log
 
-> _3–5 entries documenting what was asked, what AI produced, and what was changed/rejected/kept and why._
+**Entry 1 — Initial scene and component build (Session 3, March 30, 2026)**
+- **Asked:** Build the full React app structure — CSS room scene (wall, window, curtains, couch, painting), child placeholder figure, table with plate, 2×2 food grid, hover interactions (scale, fade, face animation, background shift), info panels (top/left/right), and Web Audio API sounds for all 4 foods.
+- **Produced:** Complete working app matching the Design Intent layout. Background color transitions on hover, food scaling/fading, blinking face animation, and programmatically generated sounds (no audio files needed).
+- **Kept:** Overall structure, sound approach using Web Audio API, CSS-drawn room elements, component architecture (FoodItem, InfoPanel, data/foods.js, utils/sounds.js).
+- **Note:** Child character is a CSS placeholder (geometric shapes). Final version should match the illustrated 3D/cartoon style described in the Design Intent.
 
 ---
 
