@@ -136,29 +136,16 @@
   margin-bottom: 0;
 }
 
-/* ── Chair back (behind girl) ───────────────────── */
-.chair-back {
-  width: 180px;
-  height: 130px;
-  background: linear-gradient(170deg, #D4A870 0%, #A87040 100%);
-  border-radius: 18px 18px 0 0;
-  box-shadow: inset 0 4px 12px rgba(255,255,255,0.15), 2px 0 8px rgba(0,0,0,0.12);
-  position: relative;
-  z-index: 4;
-  /* pull it down so it peeks behind the girl's back */
-  margin-bottom: -120px;
-}
-
 /* ── Child figure ───────────────────────────────── */
 .child-figure {
-  height: 280px;
+  height: 520px;
   width: auto;
   object-fit: contain;
   position: relative;
   z-index: 5;
-  /* pull the table up to overlap her lap */
-  margin-bottom: -80px;
-  filter: drop-shadow(0 8px 24px rgba(0,0,0,0.15));
+  /* table overlaps her lap naturally */
+  margin-bottom: -145px;
+  filter: drop-shadow(0 10px 28px rgba(0,0,0,0.15));
 }
 
 /* ── Table ──────────────────────────────────────── */

@@ -55,9 +55,6 @@ export default function App() {
       {/* Focal area: child + table */}
       <div className="focal-area">
 
-        {/* Chair back — sits behind the girl */}
-        <div className="chair-back" />
-
         {/* Child character — sitting pose, transparent PNG */}
         <img
           className="child-figure"
