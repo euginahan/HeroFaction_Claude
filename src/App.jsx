@@ -55,20 +55,12 @@ export default function App() {
       {/* Focal area: child + table */}
       <div className="focal-area">
 
-        {/* Child placeholder */}
-        <div className="child-figure">
-          <div className="child-head">
-            <div className="child-hair" />
-            <div className="child-face">
-              <div className="child-eye child-eye-left" />
-              <div className="child-eye child-eye-right" />
-              <div className="child-smile" />
-            </div>
-            <div className="pigtail pigtail-left" />
-            <div className="pigtail pigtail-right" />
-          </div>
-          <div className="child-body" />
-        </div>
+        {/* Child character */}
+        <img
+          className="child-figure"
+          src={`${import.meta.env.BASE_URL}girl.jpeg`}
+          alt="A happy girl ready to explore food"
+        />
 
         {/* Table */}
         <div className="table">

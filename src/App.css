@@ -136,79 +136,14 @@
   margin-bottom: 0;
 }
 
-/* ── Child figure (CSS placeholder) ────────────── */
+/* ── Child figure ───────────────────────────────── */
 .child-figure {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: -8px;
+  height: 260px;
+  width: auto;
+  object-fit: contain;
+  margin-bottom: -12px;
   z-index: 6;
-}
-
-.child-head {
-  position: relative;
-  width: 72px;
-  height: 72px;
-}
-
-.child-hair {
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 38px;
-  background: #1A1008;
-  border-radius: 36px 36px 0 0;
-}
-
-.child-face {
-  position: absolute;
-  top: 18px; left: 6px; right: 6px;
-  height: 50px;
-  background: #FDDBB4;
-  border-radius: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.child-eye {
-  width: 7px;
-  height: 8px;
-  background: #2C1810;
-  border-radius: 50%;
-  margin-top: -6px;
-}
-
-.child-smile {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 22px;
-  height: 10px;
-  border: 3px solid #C07050;
-  border-top: none;
-  border-radius: 0 0 22px 22px;
-}
-
-.pigtail {
-  position: absolute;
-  top: 28px;
-  width: 14px;
-  height: 24px;
-  background: #1A1008;
-  border-radius: 50%;
-}
-.pigtail-left  { left: -10px; }
-.pigtail-right { right: -10px; }
-
-.child-body {
-  width: 80px;
-  height: 60px;
-  background: linear-gradient(180deg, #F48FB1, #EC407A);
-  border-radius: 16px 16px 8px 8px;
-  margin-top: 2px;
+  filter: drop-shadow(0 8px 20px rgba(0,0,0,0.18));
 }
 
 /* ── Table ──────────────────────────────────────── */
