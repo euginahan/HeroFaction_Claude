@@ -2,6 +2,8 @@ export const foods = [
   {
     id: 'apple',
     emoji: '🍎',
+    staticImg: 'apple-static.png',
+    animatedImg: 'apple-alive.png',
     name: 'Apple',
     fact: 'Gives you energy to play!',
     recommendation: 'Great anytime snack!',

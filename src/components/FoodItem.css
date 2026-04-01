@@ -31,6 +31,13 @@
   transform: rotate(var(--rotation)) scale(0.88);
 }
 
+/* Fully hidden (image-food hovered — all siblings disappear) */
+.food-item.is-hidden {
+  opacity: 0;
+  transform: rotate(var(--rotation)) scale(0.88);
+  pointer-events: none;
+}
+
 /* Face overlay */
 .food-face {
   position: absolute;
@@ -78,4 +85,58 @@
 @keyframes blink {
   0%, 88%, 100% { transform: scaleY(1); }
   92%            { transform: scaleY(0.08); }
+}
+
+/* ── Image-based food items ──────────────────────── */
+
+/* Idle: same 110×110 footprint as emoji items */
+.food-img-wrap {
+  position: relative;
+  width: 110px;
+  height: 110px;
+}
+
+.food-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: opacity 250ms ease-out;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+}
+
+/* Static apple: visible by default */
+.food-img-static { opacity: 1; }
+.food-img-static.img-hidden { opacity: 0; }
+
+/* Alive apple: hidden by default */
+.food-img-alive { opacity: 0; }
+.food-img-alive.img-visible {
+  opacity: 1;
+  filter: drop-shadow(0 0 16px var(--glow)) drop-shadow(0 6px 14px rgba(0,0,0,0.22));
+  animation: apple-wave 1.4s ease-in-out 2 forwards;
+}
+
+/* Hovered image-food: break out of grid, center on plate-inner, scale up */
+.food-item.has-img.is-hovered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1.25);
+  z-index: 20;
+  /* transition off so snap is instant — crossfade masks the jump */
+  transition: opacity 250ms ease-out;
+}
+
+/* Wave + bounce on the alive image */
+@keyframes apple-wave {
+  0%   { transform: translateY(0)    rotate(0deg); }
+  15%  { transform: translateY(-9px) rotate(-6deg); }
+  30%  { transform: translateY(0px)  rotate(6deg); }
+  45%  { transform: translateY(-7px) rotate(-4deg); }
+  60%  { transform: translateY(0px)  rotate(4deg); }
+  75%  { transform: translateY(-4px) rotate(-2deg); }
+  90%  { transform: translateY(0px)  rotate(2deg); }
+  100% { transform: translateY(0)    rotate(0deg); }
 }

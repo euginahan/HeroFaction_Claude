@@ -65,6 +65,7 @@ export default function App() {
                     food={food}
                     isHovered={hoveredId === food.id}
                     isOtherHovered={hoveredId !== null && hoveredId !== food.id}
+                    fullDim={!!(activeFood?.staticImg && hoveredId !== food.id && hoveredId !== null)}
                     onHover={handleHover}
                     onLeave={handleLeave}
                   />

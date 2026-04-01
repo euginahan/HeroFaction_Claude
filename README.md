@@ -103,13 +103,7 @@ No food is pre-selected at load. The scene is calm and inviting — storybook-li
 **Transition timing:** 400–500ms, `ease-out`. Background shift slightly slower (~500ms). Nothing abrupt.
 
 When a food is hovered:
-- Selected food **scales up** (1.2–1.4×), smooth ease-out
-- Other foods **fade to ~30% opacity** and slightly shrink
 - Background **shifts to the food's color palette** (~500ms)
-- Selected food gets a **simple animated face:**
-  - Two small dot eyes + curved smiling mouth
-  - Eyes gently blink (slow, subtle)
-  - Face fades in smoothly on hover
 - **Text appears in separate screen areas** (fades in on hover, fades out on leave, never overlaps child or food):
   - Top center → Food name
   - Left side → Fun fact
@@ -119,6 +113,27 @@ When a food is hovered:
   - Broccoli → light pop/boing
   - Chips → crispy crunch
   - Ice Cream → soft playful chime
+
+**For emoji-based foods (Broccoli, Chips, Ice Cream — until image assets are added):**
+- Selected food scales up (1.3×) with glow drop-shadow
+- Other foods fade to ~30% opacity and slightly shrink (0.88×)
+- Selected food gets a CSS animated face (dot eyes + smile, eyes blink)
+
+**For image-based foods (Apple — others added one at a time as assets are ready):**
+- Idle: static PNG illustration, same 110×110 footprint as emoji foods, centered in its grid cell
+- On hover:
+  - Smooth 250ms crossfade from static → animated "alive" character PNG
+  - Animated version lifts out of the grid and **centers on the plate** at **1.25× scale**
+  - Subtle wave + bounce CSS animation plays 2× on the alive character
+  - Soft shadow grounds the character on the plate
+  - All other foods **fade to 0% opacity** (fully hidden)
+  - Crunch sound triggers on hover start
+- On hover-out:
+  - 250ms crossfade back to static PNG
+  - Other foods return to full opacity
+  - Apple returns to its grid cell position
+
+_Assets used exactly as provided — no restyle or redraw. Only CSS animation applied._
 
 ---
 
@@ -137,6 +152,12 @@ When a food is hovered:
 ---
 
 ## AI Direction Log
+
+**Entry 2 — Apple image assets + image-food system (Session 4, April 1, 2026)**
+- **Asked:** Replace emoji apple with provided static + animated PNGs. Crossfade 250ms, center alive apple on plate at 1.25× scale on hover, hide all siblings to 0%, wave+bounce animation 2 loops, crunch sound.
+- **Produced:** Data-driven hybrid system — `FoodItem` reads `staticImg`/`animatedImg` fields and switches between image-crossfade path and emoji+face path. Alive apple uses `position: absolute` centered on `.plate-inner` (the positioning reference) to break out of the 2×2 grid on hover. Wave animation applied to the image, centering to the wrapper.
+- **Kept:** 250ms crossfade, 1.25× scale, full 0% opacity hide for siblings, 2-loop wave+bounce, crunch on hover.
+- **Note:** Foods are updated one at a time. Broccoli, Chips, Ice Cream still emoji until their assets arrive.
 
 **Entry 1 — Initial scene and component build (Session 3, March 30, 2026)**
 - **Asked:** Build the full React app structure — CSS room scene (wall, window, curtains, couch, painting), child placeholder figure, table with plate, 2×2 food grid, hover interactions (scale, fade, face animation, background shift), info panels (top/left/right), and Web Audio API sounds for all 4 foods.
