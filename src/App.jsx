@@ -55,11 +55,14 @@ export default function App() {
       {/* Focal area: child + table */}
       <div className="focal-area">
 
-        {/* Child character */}
+        {/* Chair back — sits behind the girl */}
+        <div className="chair-back" />
+
+        {/* Child character — sitting pose, transparent PNG */}
         <img
           className="child-figure"
-          src={`${import.meta.env.BASE_URL}girl.jpeg`}
-          alt="A happy girl ready to explore food"
+          src={`${import.meta.env.BASE_URL}girl.png`}
+          alt="A happy girl sitting at the table"
         />
 
         {/* Table */}
