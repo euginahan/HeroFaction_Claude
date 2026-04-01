@@ -1,8 +1,9 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useCallback } from 'react'
 import './FoodItem.css'
 
 export default function FoodItem({ food, isHovered, isOtherHovered, fullDim, onHover, onLeave }) {
   const faceRef = useRef(null)
+  const hoverTimer = useRef(null)
 
   useEffect(() => {
     if (isHovered && faceRef.current) {
@@ -14,6 +15,16 @@ export default function FoodItem({ food, isHovered, isOtherHovered, fullDim, onH
     }
   }, [isHovered])
 
+  // 75ms delay before triggering hover — prevents flicker from cursor jitter
+  const handleEnter = useCallback(() => {
+    hoverTimer.current = setTimeout(() => onHover(food.id), 75)
+  }, [food.id, onHover])
+
+  const handleLeave = useCallback(() => {
+    clearTimeout(hoverTimer.current)
+    onLeave()
+  }, [onLeave])
+
   const hasImages = !!(food.staticImg && food.animatedImg)
   const base = import.meta.env.BASE_URL
 
@@ -21,8 +32,8 @@ export default function FoodItem({ food, isHovered, isOtherHovered, fullDim, onH
     <div
       className={`food-item ${hasImages ? 'has-img' : ''} ${isHovered ? 'is-hovered' : ''} ${fullDim ? 'is-hidden' : isOtherHovered ? 'is-dimmed' : ''}`}
       style={{ '--rotation': `${food.rotation}deg`, '--glow': food.colors.glow }}
-      onMouseEnter={() => onHover(food.id)}
-      onMouseLeave={onLeave}
+      onMouseEnter={handleEnter}
+      onMouseLeave={handleLeave}
     >
       {hasImages ? (
         <div className="food-img-wrap">
