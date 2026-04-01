@@ -5,6 +5,8 @@ import FoodItem from './components/FoodItem'
 import InfoPanel from './components/InfoPanel'
 import './App.css'
 
+const imageFoods = foods.filter(f => f.staticImg && f.animatedImg)
+
 export default function App() {
   const [hoveredId, setHoveredId] = useState(null)
   const activeFood = foods.find(f => f.id === hoveredId) ?? null
@@ -34,17 +36,14 @@ export default function App() {
 
       <InfoPanel food={activeFood} />
 
-      {/* Stage: absolute-positioned container anchored to scene bottom */}
       <div className="stage">
 
-        {/* Girl: anchored bottom, sits on bench */}
         <img
           className="child-figure"
           src={`${import.meta.env.BASE_URL}girl.png`}
           alt="A happy girl sitting at the table"
         />
 
-        {/* Bench: behind the table, wider so sides are visible */}
         <div className="bench">
           <div className="bench-seat" />
           <div className="bench-legs">
@@ -53,11 +52,12 @@ export default function App() {
           </div>
         </div>
 
-        {/* Table: in front, covers girl's lap and bench center */}
         <div className="table">
           <div className="utensil fork">🍴</div>
           <div className="plate">
             <div className="plate-inner">
+
+              {/* Food grid — static images + emoji foods stay here */}
               <div className="food-grid">
                 {foods.map(food => (
                   <FoodItem
@@ -71,6 +71,20 @@ export default function App() {
                   />
                 ))}
               </div>
+
+              {/* Alive overlays — absolutely centered on plate, one per image-food.
+                  Always mounted so opacity transitions work cleanly. */}
+              {imageFoods.map(food => (
+                <img
+                  key={food.id}
+                  className={`alive-overlay ${hoveredId === food.id ? 'alive-visible' : ''}`}
+                  src={`${import.meta.env.BASE_URL}${food.animatedImg}`}
+                  style={{ '--glow': food.colors.glow }}
+                  alt=""
+                  draggable={false}
+                />
+              ))}
+
             </div>
           </div>
           <div className="utensil spoon">🥄</div>

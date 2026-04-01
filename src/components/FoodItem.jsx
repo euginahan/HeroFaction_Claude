@@ -15,7 +15,7 @@ export default function FoodItem({ food, isHovered, isOtherHovered, fullDim, onH
     }
   }, [isHovered])
 
-  // 75ms delay before triggering hover — prevents flicker from cursor jitter
+  // 75ms delay prevents flicker from cursor jitter at element edges
   const handleEnter = useCallback(() => {
     hoverTimer.current = setTimeout(() => onHover(food.id), 75)
   }, [food.id, onHover])
@@ -36,20 +36,13 @@ export default function FoodItem({ food, isHovered, isOtherHovered, fullDim, onH
       onMouseLeave={handleLeave}
     >
       {hasImages ? (
-        <div className="food-img-wrap">
-          <img
-            className={`food-img food-img-static ${isHovered ? 'img-hidden' : ''}`}
-            src={`${base}${food.staticImg}`}
-            alt={food.name}
-            draggable={false}
-          />
-          <img
-            className={`food-img food-img-alive ${isHovered ? 'img-visible' : ''}`}
-            src={`${base}${food.animatedImg}`}
-            alt={`${food.name} waving`}
-            draggable={false}
-          />
-        </div>
+        /* Static image only — animated version renders as a plate overlay in App.jsx */
+        <img
+          className={`food-img-static ${isHovered ? 'img-hidden' : ''}`}
+          src={`${base}${food.staticImg}`}
+          alt={food.name}
+          draggable={false}
+        />
       ) : (
         <>
           <span className="food-emoji">{food.emoji}</span>

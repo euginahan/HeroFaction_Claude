@@ -203,6 +203,7 @@
 }
 
 .plate-inner {
+  position: relative;       /* anchor for .alive-overlay absolute centering */
   width: 88%;
   height: 88%;
   border-radius: 50%;
@@ -210,6 +211,39 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* ── Alive overlay: centered on plate, independent of grid ── */
+.alive-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 160px;
+  height: 160px;
+  object-fit: contain;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 10;
+  transition: opacity 250ms ease-out;
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,0.22));
+}
+
+.alive-overlay.alive-visible {
+  opacity: 1;
+  filter: drop-shadow(0 0 16px var(--glow)) drop-shadow(0 6px 14px rgba(0,0,0,0.22));
+  animation: apple-wave 1.4s ease-in-out 2 forwards;
+}
+
+@keyframes apple-wave {
+  0%   { transform: translate(-50%, -50%) translateY(0)    rotate(0deg); }
+  15%  { transform: translate(-50%, -50%) translateY(-8px) rotate(-5deg); }
+  30%  { transform: translate(-50%, -50%) translateY(0px)  rotate(5deg); }
+  45%  { transform: translate(-50%, -50%) translateY(-6px) rotate(-3deg); }
+  60%  { transform: translate(-50%, -50%) translateY(0px)  rotate(3deg); }
+  75%  { transform: translate(-50%, -50%) translateY(-3px) rotate(-1deg); }
+  90%  { transform: translate(-50%, -50%) translateY(0px)  rotate(1deg); }
+  100% { transform: translate(-50%, -50%) translateY(0)    rotate(0deg); }
 }
 
 /* ── Food grid ──────────────────────────────────── */
