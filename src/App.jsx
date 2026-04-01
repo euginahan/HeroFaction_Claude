@@ -22,51 +22,32 @@ export default function App() {
   return (
     <div
       className="scene"
-      style={{
-        backgroundColor: activeFood ? activeFood.colors.highlight : '#F5E2C0',
-      }}
+      style={{ backgroundImage: `url(${import.meta.env.BASE_URL}kitchen.jpg)` }}
     >
-      {/* Room: window */}
-      <div className="room-window">
-        <div className="window-pane">
-          <div className="tree tree-1" />
-          <div className="tree tree-2" />
-        </div>
-        <div className="curtain curtain-left" />
-        <div className="curtain curtain-right" />
-      </div>
+      {/* Subtle color wash overlay on hover */}
+      <div
+        className="color-overlay"
+        style={{
+          backgroundColor: activeFood?.colors.highlight ?? 'transparent',
+          opacity: activeFood ? 0.28 : 0,
+        }}
+      />
 
-      {/* Room: wall painting */}
-      <div className="room-painting">
-        <div className="painting-inner" />
-      </div>
-
-      {/* Room: couch */}
-      <div className="room-couch">
-        <div className="couch-back" />
-        <div className="couch-seat" />
-        <div className="couch-arm couch-arm-left" />
-        <div className="couch-arm couch-arm-right" />
-      </div>
-
-      {/* Info panels (positioned absolute, fade in/out) */}
+      {/* Info panels */}
       <InfoPanel food={activeFood} />
 
-      {/* Focal area: child + table */}
+      {/* Focal area: girl + table */}
       <div className="focal-area">
 
-        {/* Child character — sitting pose, transparent PNG */}
         <img
           className="child-figure"
           src={`${import.meta.env.BASE_URL}girl.png`}
           alt="A happy girl sitting at the table"
         />
 
-        {/* Table */}
         <div className="table">
           <div className="utensil fork">🍴</div>
 
-          {/* Plate with foods */}
           <div className="plate">
             <div className="plate-inner">
               <div className="food-grid">
