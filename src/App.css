@@ -17,8 +17,6 @@
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  /* warm ambient light to match kitchen */
-  filter: saturate(1.05);
 }
 
 /* ── Color overlay (hover wash) ─────────────────── */
@@ -38,69 +36,103 @@
   flex-direction: column;
   align-items: center;
   z-index: 5;
-  /* lift slightly off the very bottom edge */
-  margin-bottom: 0;
 }
 
 /* ── Child figure ───────────────────────────────── */
 .child-figure {
-  height: 38vh;
-  max-height: 340px;
-  min-height: 200px;
+  /* 250–300% of previous 38vh → targeting 62–65vh */
+  height: 63vh;
+  max-height: 560px;
+  min-height: 320px;
   width: auto;
   object-fit: contain;
   position: relative;
   z-index: 5;
-  /* table overlaps her lap */
-  margin-bottom: -11vh;
-  /* anchor shadow to ground her */
+  /* table overlaps her lap (~28% of her height) */
+  margin-bottom: -19vh;
+  /* warm shadow matching right-side kitchen light */
   filter:
-    drop-shadow(0 16px 12px rgba(180, 100, 60, 0.30))
-    drop-shadow(0 4px 4px rgba(0,0,0,0.18));
+    drop-shadow(-6px 20px 14px rgba(160, 90, 40, 0.35))
+    drop-shadow(0 6px 6px rgba(0,0,0,0.20));
 }
 
 /* ── Table ──────────────────────────────────────── */
 .table {
   display: flex;
   align-items: center;
-  gap: 16px;
-  /* warm wood matching kitchen cabinetry */
-  background: linear-gradient(175deg, #C8895A 0%, #9E6030 100%);
-  border-radius: 24px 24px 0 0;
-  padding: 18px 36px 0;
-  /* wider to match kitchen floor perspective */
-  width: min(640px, 88vw);
-  box-shadow:
-    0 -6px 24px rgba(0,0,0,0.22),
-    inset 0 2px 6px rgba(255,220,160,0.25);
+  justify-content: center;
+  gap: 14px;
+  /* warm wood, right-side highlight matching kitchen light */
+  background: linear-gradient(
+    to left,
+    #C8895A 0%,
+    #A86A38 55%,
+    #8C5525 100%
+  );
+  border-radius: 20px 20px 0 0;
+  padding: 16px 28px 0;
+  /* 70–75% of previous 640px */
+  width: min(460px, 62vw);
   position: relative;
   z-index: 7;
-  /* subtle perspective tilt to sit on the floor plane */
-  transform: perspective(900px) rotateX(2deg);
+  /* 12° top-down tilt: top edge recedes, bottom stays grounded */
+  transform: perspective(480px) rotateX(12deg);
   transform-origin: bottom center;
+  /* shadow beneath to anchor to floor */
+  box-shadow:
+    0 18px 40px rgba(0,0,0,0.35),
+    0 6px 12px rgba(0,0,0,0.20),
+    inset 0 2px 6px rgba(255, 210, 140, 0.20);
+}
+
+/* warm right-side light strip */
+.table::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    to left,
+    rgba(255, 200, 100, 0.18) 0%,
+    transparent 55%
+  );
+  pointer-events: none;
+}
+
+/* ── Ground shadow beneath table ───────────────── */
+.table::before {
+  content: '';
+  position: absolute;
+  bottom: -18px;
+  left: 10%;
+  right: 10%;
+  height: 20px;
+  background: rgba(0,0,0,0.22);
+  border-radius: 50%;
+  filter: blur(10px);
+  z-index: -1;
 }
 
 /* ── Utensils ───────────────────────────────────── */
 .utensil {
-  font-size: 30px;
+  font-size: 28px;
   line-height: 1;
-  filter: drop-shadow(0 2px 3px rgba(0,0,0,0.25));
   flex-shrink: 0;
-  /* warm tint to match kitchen lighting */
-  filter: sepia(20%) drop-shadow(0 2px 3px rgba(0,0,0,0.2));
+  filter: sepia(25%) drop-shadow(0 2px 3px rgba(0,0,0,0.22));
 }
 
 /* ── Plate ──────────────────────────────────────── */
 .plate {
   flex: 1;
   aspect-ratio: 1;
-  max-width: 280px;
-  background: radial-gradient(ellipse at 35% 30%, #FFFFFF 0%, #F0EEEB 100%);
+  max-width: 240px;
+  /* slight warm tint on right to match kitchen light */
+  background: radial-gradient(ellipse at 65% 35%, #FFFFFF 0%, #EDE9E4 100%);
   border-radius: 50%;
   box-shadow:
-    0 6px 20px rgba(0,0,0,0.18),
-    inset 0 2px 8px rgba(0,0,0,0.05),
-    0 0 0 5px #E8E4DF;
+    0 8px 24px rgba(0,0,0,0.22),
+    inset 0 2px 8px rgba(0,0,0,0.06),
+    0 0 0 5px #E2DDD8;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -120,6 +152,6 @@
 .food-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 4px;
-  padding: 8px;
+  gap: 2px;
+  padding: 6px;
 }
