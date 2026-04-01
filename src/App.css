@@ -40,20 +40,103 @@
 
 /* ── Child figure ───────────────────────────────── */
 .child-figure {
-  /* 250–300% of previous 38vh → targeting 62–65vh */
-  height: 63vh;
-  max-height: 560px;
-  min-height: 320px;
+  /* 140% of previous 63vh */
+  height: 78vh;
+  max-height: 680px;
+  min-height: 380px;
   width: auto;
   object-fit: contain;
   position: relative;
-  z-index: 5;
-  /* table overlaps her lap (~28% of her height) */
-  margin-bottom: -19vh;
-  /* warm shadow matching right-side kitchen light */
+  z-index: 6;
+  /* table overlaps her lap (~26% of her height) */
+  margin-bottom: -22vh;
+  /* warm shadow anchoring her to the bench */
   filter:
-    drop-shadow(-6px 20px 14px rgba(160, 90, 40, 0.35))
-    drop-shadow(0 6px 6px rgba(0,0,0,0.20));
+    drop-shadow(-4px 18px 12px rgba(160, 90, 40, 0.32))
+    drop-shadow(0 5px 5px rgba(0,0,0,0.18));
+}
+
+/* ── Floor group: bench + table share same plane ── */
+.floor-group {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* shared width context for bench/table alignment */
+  width: min(560px, 82vw);
+}
+
+/* ── Bench ──────────────────────────────────────── */
+.bench {
+  position: absolute;
+  /* sits directly behind the table — same bottom anchor */
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) perspective(480px) rotateX(12deg);
+  transform-origin: bottom center;
+  /* slightly wider than table so sides are visible */
+  width: 112%;
+  z-index: 5; /* behind table (z:7), in front of girl body overlap */
+}
+
+.bench-seat {
+  height: 30px;
+  background: linear-gradient(
+    to left,
+    #D49A65 0%,
+    #B07540 55%,
+    #8C5A25 100%
+  );
+  border-radius: 10px 10px 0 0;
+  box-shadow:
+    0 -5px 12px rgba(0,0,0,0.25),
+    inset 0 3px 5px rgba(255,210,140,0.28);
+}
+
+/* warm right-side light matching kitchen */
+.bench-seat::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    to left,
+    rgba(255,200,100,0.22) 0%,
+    transparent 55%
+  );
+  pointer-events: none;
+}
+
+.bench-legs {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 24px;
+}
+
+.bench-leg {
+  width: 20px;
+  height: 55px;
+  background: linear-gradient(
+    to left,
+    #C08050 0%,
+    #8C5A28 100%
+  );
+  border-radius: 0 0 5px 5px;
+  box-shadow: 2px 4px 8px rgba(0,0,0,0.22);
+}
+
+/* soft ground shadow beneath bench */
+.bench::after {
+  content: '';
+  position: absolute;
+  bottom: -14px;
+  left: 8%;
+  right: 8%;
+  height: 16px;
+  background: rgba(0,0,0,0.20);
+  border-radius: 50%;
+  filter: blur(10px);
+  z-index: -1;
 }
 
 /* ── Table ──────────────────────────────────────── */
@@ -62,7 +145,6 @@
   align-items: center;
   justify-content: center;
   gap: 14px;
-  /* warm wood, right-side highlight matching kitchen light */
   background: linear-gradient(
     to left,
     #C8895A 0%,
@@ -71,18 +153,15 @@
   );
   border-radius: 20px 20px 0 0;
   padding: 16px 28px 0;
-  /* 70–75% of previous 640px */
-  width: min(460px, 62vw);
+  width: 100%;
   position: relative;
   z-index: 7;
-  /* 12° top-down tilt: top edge recedes, bottom stays grounded */
   transform: perspective(480px) rotateX(12deg);
   transform-origin: bottom center;
-  /* shadow beneath to anchor to floor */
   box-shadow:
-    0 18px 40px rgba(0,0,0,0.35),
-    0 6px 12px rgba(0,0,0,0.20),
-    inset 0 2px 6px rgba(255, 210, 140, 0.20);
+    0 -6px 24px rgba(0,0,0,0.28),
+    0 14px 32px rgba(0,0,0,0.30),
+    inset 0 2px 6px rgba(255,210,140,0.20);
 }
 
 /* warm right-side light strip */
@@ -93,19 +172,19 @@
   border-radius: inherit;
   background: linear-gradient(
     to left,
-    rgba(255, 200, 100, 0.18) 0%,
+    rgba(255,200,100,0.18) 0%,
     transparent 55%
   );
   pointer-events: none;
 }
 
-/* ── Ground shadow beneath table ───────────────── */
+/* ground shadow beneath table */
 .table::before {
   content: '';
   position: absolute;
   bottom: -18px;
-  left: 10%;
-  right: 10%;
+  left: 8%;
+  right: 8%;
   height: 20px;
   background: rgba(0,0,0,0.22);
   border-radius: 50%;
@@ -126,7 +205,6 @@
   flex: 1;
   aspect-ratio: 1;
   max-width: 240px;
-  /* slight warm tint on right to match kitchen light */
   background: radial-gradient(ellipse at 65% 35%, #FFFFFF 0%, #EDE9E4 100%);
   border-radius: 50%;
   box-shadow:

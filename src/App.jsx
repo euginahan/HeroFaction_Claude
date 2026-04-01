@@ -36,7 +36,7 @@ export default function App() {
       {/* Info panels */}
       <InfoPanel food={activeFood} />
 
-      {/* Focal area: girl + table */}
+      {/* Focal area: girl + bench + table */}
       <div className="focal-area">
 
         <img
@@ -45,29 +45,43 @@ export default function App() {
           alt="A happy girl sitting at the table"
         />
 
-        <div className="table">
-          <div className="utensil fork">🍴</div>
+        {/* Bench + table share a positioning group */}
+        <div className="floor-group">
 
-          <div className="plate">
-            <div className="plate-inner">
-              <div className="food-grid">
-                {foods.map(food => (
-                  <FoodItem
-                    key={food.id}
-                    food={food}
-                    isHovered={hoveredId === food.id}
-                    isOtherHovered={hoveredId !== null && hoveredId !== food.id}
-                    onHover={handleHover}
-                    onLeave={handleLeave}
-                  />
-                ))}
-              </div>
+          {/* Wooden bench — behind the table */}
+          <div className="bench">
+            <div className="bench-seat" />
+            <div className="bench-legs">
+              <div className="bench-leg" />
+              <div className="bench-leg" />
             </div>
           </div>
 
-          <div className="utensil spoon">🥄</div>
-        </div>
+          {/* Table — in front of bench */}
+          <div className="table">
+            <div className="utensil fork">🍴</div>
 
+            <div className="plate">
+              <div className="plate-inner">
+                <div className="food-grid">
+                  {foods.map(food => (
+                    <FoodItem
+                      key={food.id}
+                      food={food}
+                      isHovered={hoveredId === food.id}
+                      isOtherHovered={hoveredId !== null && hoveredId !== food.id}
+                      onHover={handleHover}
+                      onLeave={handleLeave}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="utensil spoon">🥄</div>
+          </div>
+
+        </div>
       </div>
     </div>
   )
