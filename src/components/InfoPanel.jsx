@@ -5,11 +5,9 @@ export default function InfoPanel({ food }) {
 
   return (
     <>
-      {/* Top center — food name with soft white pill behind it */}
+      {/* Top center — food name, sticker outline style */}
       <div className={`info-panel info-top ${visible ? 'info-visible' : ''}`}>
-        <div className="info-name-bubble" style={{ '--food-color': food?.colors.primary }}>
-          <span className="info-name" style={{ color: food?.colors.primary }}>{food?.name}</span>
-        </div>
+        <span className="info-name" style={{ color: food?.colors.primary }}>{food?.name}</span>
       </div>
 
       {/* Left — fun fact: cream paper note with tape */}

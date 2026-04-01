@@ -24,23 +24,18 @@
   transform: translateX(-50%) translateY(0);
 }
 
-/* Soft white pill/bubble behind the title */
-.info-name-bubble {
-  display: inline-block;
-  background: rgba(255, 255, 255, 0.88);
-  border-radius: 40px;
-  padding: 10px 36px 12px;
-  box-shadow:
-    0 4px 24px rgba(0,0,0,0.10),
-    0 0 0 3px rgba(255,255,255,0.6);
-}
-
+/* Sticker outline — thick white stroke follows letter contours,
+   paint-order ensures stroke paints behind fill so fill stays clean */
 .info-name {
-  font-family: 'alphabet-soup', sans-serif;
-  font-size: 82px;
+  font-family: 'Atop', sans-serif;
+  font-size: 88px;
   line-height: 1;
   display: block;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.02em;
+  /* stroke paints first (behind), fill on top */
+  -webkit-text-stroke: 10px white;
+  paint-order: stroke fill;
+  filter: drop-shadow(0 3px 10px rgba(0,0,0,0.20));
 }
 
 /* ── Left — fun fact ─────────────────────────────── */
@@ -127,7 +122,7 @@
 
 /* ── Labels and text ─────────────────────────────── */
 .info-label {
-  font-family: 'alphabet-soup', sans-serif;
+  font-family: 'Atop', sans-serif;
   font-size: 17px;
   color: #999;
   letter-spacing: 0.02em;

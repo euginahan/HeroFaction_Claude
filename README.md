@@ -87,14 +87,20 @@ No food is pre-selected at load. The scene is calm and inviting — storybook-li
 
 ### Typography
 
-**Headers / Food Names:** Alphabet Soup (Red Rooster Collection) — playful, rounded, child-friendly
-- Size: 64–72px
-- Loaded via Adobe Fonts: `https://use.typekit.net/lgt6kjj.css`
-- Fallback: `"Comic Neue", "Nunito", sans-serif`
+**Headers / Food Names:** Atop — custom local typeface, bold and playful, child-friendly character
+- Size: 88px
+- Loaded locally via `@font-face` from `src/assets/Atop.ttf` — no external dependency
+- No fallback (intentional — Atop is always available as a bundled asset)
+- Styled as a **sticker/outline**: thick white stroke (~10px) follows each letter's exact contour using `paint-order: stroke fill`. The stroke paints behind the fill so the inner color stays clean. Subtle drop-shadow adds depth without a rectangular background.
+- Text is treated as a visual object — integrated into the illustrated scene, not a flat overlay.
+
+**Note labels (Fun Fact / Remember):** Atop at 17px — consistent with header family at smaller scale
 
 **Body / Fun Facts + Recommendations:** BC Civitas (Briefcase Type) — clean, readable, slightly softer serif
-- Size: 20–24px
-- Fallback: `"Georgia", serif`
+- Size: 19px
+- No fallback (Adobe Fonts kit loaded in index.html)
+
+_Typography rationale: treating headers as sticker-style visual objects rather than flat text improves readability against complex illustrated backgrounds while reinforcing the playful, character-driven aesthetic._
 
 ---
 
