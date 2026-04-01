@@ -84,8 +84,8 @@
 /* Slightly larger than emoji (120% of 110px food-item = 132px visual)
    but stays anchored in its grid cell via overflow:visible */
 .food-img-static {
-  width: 128px;
-  height: 128px;
+  width: 160px;
+  height: 160px;
   object-fit: contain;
   filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
   transition: opacity 250ms ease-out;
