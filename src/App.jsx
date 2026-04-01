@@ -24,7 +24,6 @@ export default function App() {
       className="scene"
       style={{ backgroundImage: `url(${import.meta.env.BASE_URL}kitchen.jpg)` }}
     >
-      {/* Subtle color wash overlay on hover */}
       <div
         className="color-overlay"
         style={{
@@ -33,55 +32,49 @@ export default function App() {
         }}
       />
 
-      {/* Info panels */}
       <InfoPanel food={activeFood} />
 
-      {/* Focal area: girl + bench + table */}
-      <div className="focal-area">
+      {/* Stage: absolute-positioned container anchored to scene bottom */}
+      <div className="stage">
 
+        {/* Girl: anchored bottom, sits on bench */}
         <img
           className="child-figure"
           src={`${import.meta.env.BASE_URL}girl.png`}
           alt="A happy girl sitting at the table"
         />
 
-        {/* Bench + table share a positioning group */}
-        <div className="floor-group">
-
-          {/* Wooden bench — behind the table */}
-          <div className="bench">
-            <div className="bench-seat" />
-            <div className="bench-legs">
-              <div className="bench-leg" />
-              <div className="bench-leg" />
-            </div>
+        {/* Bench: behind the table, wider so sides are visible */}
+        <div className="bench">
+          <div className="bench-seat" />
+          <div className="bench-legs">
+            <div className="bench-leg" />
+            <div className="bench-leg" />
           </div>
+        </div>
 
-          {/* Table — in front of bench */}
-          <div className="table">
-            <div className="utensil fork">🍴</div>
-
-            <div className="plate">
-              <div className="plate-inner">
-                <div className="food-grid">
-                  {foods.map(food => (
-                    <FoodItem
-                      key={food.id}
-                      food={food}
-                      isHovered={hoveredId === food.id}
-                      isOtherHovered={hoveredId !== null && hoveredId !== food.id}
-                      onHover={handleHover}
-                      onLeave={handleLeave}
-                    />
-                  ))}
-                </div>
+        {/* Table: in front, covers girl's lap and bench center */}
+        <div className="table">
+          <div className="utensil fork">🍴</div>
+          <div className="plate">
+            <div className="plate-inner">
+              <div className="food-grid">
+                {foods.map(food => (
+                  <FoodItem
+                    key={food.id}
+                    food={food}
+                    isHovered={hoveredId === food.id}
+                    isOtherHovered={hoveredId !== null && hoveredId !== food.id}
+                    onHover={handleHover}
+                    onLeave={handleLeave}
+                  />
+                ))}
               </div>
             </div>
-
-            <div className="utensil spoon">🥄</div>
           </div>
-
+          <div className="utensil spoon">🥄</div>
         </div>
+
       </div>
     </div>
   )

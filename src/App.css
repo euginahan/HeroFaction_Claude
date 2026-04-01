@@ -19,7 +19,7 @@
   justify-content: center;
 }
 
-/* ── Color overlay (hover wash) ─────────────────── */
+/* ── Color overlay ───────────────────────────────── */
 .color-overlay {
   position: absolute;
   inset: 0;
@@ -29,111 +29,99 @@
   mix-blend-mode: soft-light;
 }
 
-/* ── Focal area ─────────────────────────────────── */
-.focal-area {
+/* ── Stage: shared absolute-positioning context ─── */
+/* All three elements (girl, bench, table) are
+   anchored from the bottom so they share the same
+   floor plane without flex margin hacks.           */
+.stage {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  z-index: 5;
+  width: min(700px, 92vw);
+  height: 88vh;
+  flex-shrink: 0;
 }
 
-/* ── Child figure ───────────────────────────────── */
+/* ── Girl ───────────────────────────────────────── */
 .child-figure {
-  /* 140% of previous 63vh */
-  height: 78vh;
-  max-height: 680px;
-  min-height: 380px;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 85vh;
+  max-height: 740px;
+  min-height: 400px;
   width: auto;
   object-fit: contain;
-  position: relative;
   z-index: 6;
-  /* table overlaps her lap (~26% of her height) */
-  margin-bottom: -22vh;
-  /* warm shadow anchoring her to the bench */
+  /* warm right-side kitchen shadow */
   filter:
-    drop-shadow(-4px 18px 12px rgba(160, 90, 40, 0.32))
-    drop-shadow(0 5px 5px rgba(0,0,0,0.18));
-}
-
-/* ── Floor group: bench + table share same plane ── */
-.floor-group {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  /* shared width context for bench/table alignment */
-  width: min(560px, 82vw);
+    drop-shadow(-5px 18px 14px rgba(150, 85, 35, 0.32))
+    drop-shadow(0 5px 6px rgba(0,0,0,0.18));
 }
 
 /* ── Bench ──────────────────────────────────────── */
+/* Sits at bottom:0 (floor), grows upward.
+   Seat is the top child → appears highest.
+   Legs are below seat → touch the floor.
+   Wider than table so both sides peek out.          */
 .bench {
   position: absolute;
-  /* sits directly behind the table — same bottom anchor */
   bottom: 0;
   left: 50%;
   transform: translateX(-50%) perspective(480px) rotateX(12deg);
   transform-origin: bottom center;
-  /* slightly wider than table so sides are visible */
-  width: 112%;
-  z-index: 5; /* behind table (z:7), in front of girl body overlap */
+  width: min(530px, 72vw);
+  z-index: 5; /* behind table (7), in front of background */
 }
 
 .bench-seat {
-  height: 30px;
+  height: 28px;
   background: linear-gradient(
     to left,
-    #D49A65 0%,
+    #D09A65 0%,
     #B07540 55%,
     #8C5A25 100%
   );
   border-radius: 10px 10px 0 0;
   box-shadow:
-    0 -5px 12px rgba(0,0,0,0.25),
-    inset 0 3px 5px rgba(255,210,140,0.28);
+    0 -4px 10px rgba(0,0,0,0.22),
+    inset 0 2px 5px rgba(255,205,130,0.30);
+  position: relative;
 }
 
-/* warm right-side light matching kitchen */
+/* warm right-light match */
 .bench-seat::after {
   content: '';
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: linear-gradient(
-    to left,
-    rgba(255,200,100,0.22) 0%,
-    transparent 55%
-  );
+  background: linear-gradient(to left, rgba(255,195,90,0.20) 0%, transparent 55%);
   pointer-events: none;
 }
 
 .bench-legs {
+  height: 210px;
   display: flex;
   justify-content: space-between;
-  padding: 0 24px;
+  padding: 0 26px;
 }
 
 .bench-leg {
-  width: 20px;
-  height: 55px;
-  background: linear-gradient(
-    to left,
-    #C08050 0%,
-    #8C5A28 100%
-  );
+  width: 22px;
+  height: 100%;
+  background: linear-gradient(to left, #BF7A4A 0%, #8A5225 100%);
   border-radius: 0 0 5px 5px;
-  box-shadow: 2px 4px 8px rgba(0,0,0,0.22);
+  box-shadow: 2px 4px 8px rgba(0,0,0,0.20);
 }
 
-/* soft ground shadow beneath bench */
+/* ground shadow beneath bench */
 .bench::after {
   content: '';
   position: absolute;
   bottom: -14px;
-  left: 8%;
-  right: 8%;
-  height: 16px;
-  background: rgba(0,0,0,0.20);
+  left: 6%;
+  right: 6%;
+  height: 18px;
+  background: rgba(0,0,0,0.18);
   border-radius: 50%;
   filter: blur(10px);
   z-index: -1;
@@ -141,6 +129,13 @@
 
 /* ── Table ──────────────────────────────────────── */
 .table {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) perspective(480px) rotateX(12deg);
+  transform-origin: bottom center;
+  width: min(460px, 64vw);
+  z-index: 7;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -152,29 +147,20 @@
     #8C5525 100%
   );
   border-radius: 20px 20px 0 0;
-  padding: 16px 28px 0;
-  width: 100%;
-  position: relative;
-  z-index: 7;
-  transform: perspective(480px) rotateX(12deg);
-  transform-origin: bottom center;
+  padding: 16px 24px 0;
   box-shadow:
-    0 -6px 24px rgba(0,0,0,0.28),
-    0 14px 32px rgba(0,0,0,0.30),
+    0 -4px 20px rgba(0,0,0,0.22),
+    0 16px 36px rgba(0,0,0,0.32),
     inset 0 2px 6px rgba(255,210,140,0.20);
 }
 
-/* warm right-side light strip */
+/* warm right-side light */
 .table::after {
   content: '';
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: linear-gradient(
-    to left,
-    rgba(255,200,100,0.18) 0%,
-    transparent 55%
-  );
+  background: linear-gradient(to left, rgba(255,200,100,0.18) 0%, transparent 55%);
   pointer-events: none;
 }
 
@@ -204,12 +190,12 @@
 .plate {
   flex: 1;
   aspect-ratio: 1;
-  max-width: 240px;
+  max-width: 230px;
   background: radial-gradient(ellipse at 65% 35%, #FFFFFF 0%, #EDE9E4 100%);
   border-radius: 50%;
   box-shadow:
-    0 8px 24px rgba(0,0,0,0.22),
-    inset 0 2px 8px rgba(0,0,0,0.06),
+    0 8px 24px rgba(0,0,0,0.20),
+    inset 0 2px 8px rgba(0,0,0,0.05),
     0 0 0 5px #E2DDD8;
   display: flex;
   align-items: center;
