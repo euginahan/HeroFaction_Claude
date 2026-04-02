@@ -21,6 +21,8 @@ export const foods = [
   {
     id: 'broccoli',
     emoji: '🥦',
+    staticImg: 'broccoli-static.png',
+    animatedImg: 'broccoli-alive.png',
     name: 'Broccoli',
     fact: 'Helps you grow strong!',
     recommendation: 'Eat often to stay healthy!',
