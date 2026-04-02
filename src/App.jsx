@@ -77,7 +77,7 @@ export default function App() {
               {imageFoods.map(food => (
                 <img
                   key={food.id}
-                  className={`alive-overlay ${hoveredId === food.id ? 'alive-visible' : ''}`}
+                  className={`alive-overlay alive-${food.id} ${hoveredId === food.id ? 'alive-visible' : ''}`}
                   src={`${import.meta.env.BASE_URL}${food.animatedImg}`}
                   style={{ '--glow': food.colors.glow }}
                   alt=""

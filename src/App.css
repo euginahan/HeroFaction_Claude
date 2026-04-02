@@ -235,6 +235,12 @@
   animation: apple-wave 1.4s ease-in-out 2 forwards;
 }
 
+/* Per-food size overrides — accounts for PNG canvas padding differences */
+.alive-broccoli {
+  width: 264px;
+  height: 264px;
+}
+
 @keyframes apple-wave {
   0%   { transform: translate(-50%, -50%) translateY(0)    rotate(0deg); }
   15%  { transform: translate(-50%, -50%) translateY(-8px) rotate(-5deg); }
