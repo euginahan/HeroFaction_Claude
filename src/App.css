@@ -241,6 +241,11 @@
   height: 264px;
 }
 
+.alive-chips {
+  width: 220px;
+  height: 220px;
+}
+
 @keyframes apple-wave {
   0%   { transform: translate(-50%, -50%) translateY(0)    rotate(0deg); }
   15%  { transform: translate(-50%, -50%) translateY(-8px) rotate(-5deg); }

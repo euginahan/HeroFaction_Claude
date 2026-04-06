@@ -40,6 +40,8 @@ export const foods = [
   {
     id: 'chips',
     emoji: '🍟',
+    staticImg: 'chips-static.png',
+    animatedImg: 'chips-alive.png',
     name: 'Chips',
     fact: 'Crunchy and yummy!',
     recommendation: 'Enjoy sometimes!',
