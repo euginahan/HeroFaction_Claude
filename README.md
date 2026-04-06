@@ -293,4 +293,4 @@ The three small connector circles trailing from the thought bubble toward the gi
 
 ## Five Questions Reflection
 
-> _Short paragraph answering: Can I defend this? Is this mine? Did I verify? Would I teach this? Is my documentation honest?_
+Yes, I can explain and defend my decisions because each one was made to improve how clear and engaging the experience feels, especially for kids. This project reflects my own creative direction. AI helped with execution, but I was constantly adjusting and refining things to match what I had in mind rather than just accepting what was given. I tested interactions throughout the process and fixed anything that didn't feel right so I know it works the way I expect. I also understand both the design and interaction well enough to explain it to someone else, not just what it does but why it works that way. My documentation is honest and shows how the project evolved, including the changes I made and how I used AI as a tool while still leading the process.
