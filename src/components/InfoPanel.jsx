@@ -1,17 +1,24 @@
 import './InfoPanel.css'
 
-export default function InfoPanel({ food }) {
-  const visible = !!food
+export default function InfoPanel({ food, fedMessage, fedColor }) {
+  const foodVisible = !!food
+  const fedVisible  = !!fedMessage
+  const topVisible  = foodVisible || fedVisible
 
   return (
     <>
-      {/* Top center — food name, sticker outline style */}
-      <div className={`info-panel info-top ${visible ? 'info-visible' : ''}`}>
-        <span className="info-name" style={{ color: food?.colors.primary }}>{food?.name}</span>
+      {/* Top center — food name or fed message */}
+      <div className={`info-panel info-top ${topVisible ? 'info-visible' : ''}`}>
+        <span
+          className={`info-name ${fedVisible ? 'info-fed' : ''}`}
+          style={{ color: fedVisible ? fedColor : food?.colors.primary }}
+        >
+          {fedVisible ? fedMessage : food?.name}
+        </span>
       </div>
 
-      {/* Left — fun fact: cream paper note with tape */}
-      <div className={`info-panel info-left ${visible ? 'info-visible' : ''}`}>
+      {/* Left — fun fact (only during hover, not during fed) */}
+      <div className={`info-panel info-left ${foodVisible ? 'info-visible' : ''}`}>
         <div className="paper-note note-cream">
           <div className="note-tape" />
           <span className="info-label">Fun Fact</span>
@@ -19,8 +26,8 @@ export default function InfoPanel({ food }) {
         </div>
       </div>
 
-      {/* Right — recommendation: pink paper note with torn bottom */}
-      <div className={`info-panel info-right ${visible ? 'info-visible' : ''}`}>
+      {/* Right — recommendation (only during hover, not during fed) */}
+      <div className={`info-panel info-right ${foodVisible ? 'info-visible' : ''}`}>
         <div className="paper-note note-pink note-torn">
           <span className="info-label">Remember</span>
           <span className="info-text">{food?.recommendation}</span>

@@ -38,7 +38,7 @@ export default function FoodItem({ food, isHovered, isOtherHovered, fullDim, onH
       {hasImages ? (
         /* Static image only — animated version renders as a plate overlay in App.jsx */
         <img
-          className={`food-img-static ${isHovered ? 'img-hidden' : ''}`}
+          className={`food-img-static ${(isHovered || fullDim) ? 'img-hidden' : ''}`}
           src={`${base}${food.staticImg}`}
           alt={food.name}
           draggable={false}

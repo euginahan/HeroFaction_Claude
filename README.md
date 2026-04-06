@@ -143,6 +143,39 @@ _Assets used exactly as provided — no restyle or redraw. Only CSS animation ap
 
 ---
 
+### Drag & Feed Interaction
+
+A second interaction layer built on top of hover — introduced food by food as assets are ready.
+
+**Trigger:** After hovering a food (alive state), the plate becomes a grab zone. Clicking and dragging the alive character picks it up.
+
+**Drag behavior:**
+- A ghost image of the alive character follows the cursor smoothly
+- Ghost sways gently (CSS alternate animation) while being held
+- All plate foods remain hidden during drag
+- Cursor changes to `grabbing`
+
+**Drop zone:** The girl's upper body / head area (top 65% of her bounding box)
+
+**On successful drop:**
+- Food ghost fades out
+- Girl crossfades (~250ms) to her food-specific happy/eating version
+- 6 floating hearts animate above her head (staggered, float up + fade)
+- Header text changes to a food-specific message (same Atop sticker-outline style, pop-in animation)
+- Left/right info panels fade out
+
+**Auto-reset:** After ~2.6 seconds everything returns to the default state
+
+**Per-food messages:**
+- Apple → "An apple a day!"
+- Broccoli → "Broccoli makes you strong!" *(asset pending)*
+- Chips → "A crunchy treat!" *(asset pending)*
+- Ice Cream → "A sweet treat!" *(asset pending)*
+
+**Per-food girl states:** Each food will have its own happy-girl illustration. Currently only apple is implemented (`girl-happy-apple.png`). Others will be added as assets are provided.
+
+---
+
 ### What I Will Not Compromise On
 
 1. The tone must always feel **safe, positive, and fun** for children.

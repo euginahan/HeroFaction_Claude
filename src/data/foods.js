@@ -17,6 +17,8 @@ export const foods = [
     },
     rotation: -8,
     sound: 'crunch',
+    fedMessage: 'An apple a day!',
+    girlHappyImg: 'girl-happy-apple.png',
   },
   {
     id: 'broccoli',
