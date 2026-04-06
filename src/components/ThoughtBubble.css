@@ -34,20 +34,39 @@
 }
 
 /* ── Connector dot animation ────────────────────────────── */
-/* Circles pulse: opacity 0.6→1, scale 0.9→1.1, staggered.
-   transform-box + transform-origin make scale from each
+/* Each dot has its own keyframes so opacity depth variation is
+   preserved: closest-to-bubble pulses brightest, closest-to-head
+   stays most subtle. transform-box ensures scale is from each
    circle's own center.                                      */
 .thought-dot {
-  animation: tb-dot-pulse 1.3s ease-in-out infinite;
   transform-box: fill-box;
   transform-origin: center;
 }
 
-.thought-dot-1 { animation-delay: 0s;    }
-.thought-dot-2 { animation-delay: 0.25s; }
-.thought-dot-3 { animation-delay: 0.5s;  }
+/* Closest to bubble — full brightness */
+.thought-dot-1 {
+  animation: dot-pulse-full 1.3s ease-in-out infinite 0s;
+}
+/* Middle — slightly dimmer */
+.thought-dot-2 {
+  animation: dot-pulse-med 1.3s ease-in-out infinite 0.25s;
+}
+/* Closest to girl's head — most subtle */
+.thought-dot-3 {
+  animation: dot-pulse-soft 1.3s ease-in-out infinite 0.5s;
+}
 
-@keyframes tb-dot-pulse {
-  0%, 100% { opacity: 0.65; transform: scale(0.92); }
-  50%       { opacity: 1.0;  transform: scale(1.10); }
+@keyframes dot-pulse-full {
+  0%, 100% { opacity: 0.60; transform: scale(0.92); }
+  50%       { opacity: 1.00; transform: scale(1.10); }
+}
+
+@keyframes dot-pulse-med {
+  0%, 100% { opacity: 0.45; transform: scale(0.92); }
+  50%       { opacity: 0.85; transform: scale(1.10); }
+}
+
+@keyframes dot-pulse-soft {
+  0%, 100% { opacity: 0.30; transform: scale(0.92); }
+  50%       { opacity: 0.70; transform: scale(1.10); }
 }

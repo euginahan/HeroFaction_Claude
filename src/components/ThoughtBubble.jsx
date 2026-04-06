@@ -54,23 +54,24 @@ export default function ThoughtBubble({ visible }) {
           feed it to me!
         </text>
 
-        {/* ── Connector circles — small→large progression toward cloud ──
-            Dots spread ~45px apart along a gentle diagonal left-down arc.
-            Soft gray stroke only — no harsh black border.              */}
+        {/* ── Connector circles — gentle curved arc from cloud toward girl ──
+            Sizes reduced ~35%. Irregular gaps (small then larger) and
+            middle dot nudged right break the straight-line look.
+            No stroke — drop-shadow from SVG provides definition.      */}
         <circle
           className="thought-dot thought-dot-1"
-          cx="120" cy="186" r="22"
-          fill="white" stroke="#DADADA" strokeWidth="1.5"
+          cx="120" cy="170" r="14"
+          fill="white"
         />
         <circle
           className="thought-dot thought-dot-2"
-          cx="103" cy="231" r="14"
-          fill="white" stroke="#DADADA" strokeWidth="1.5"
+          cx="108" cy="212" r="9"
+          fill="white"
         />
         <circle
           className="thought-dot thought-dot-3"
-          cx="88" cy="266" r="9"
-          fill="white" stroke="#DADADA" strokeWidth="1.5"
+          cx="88" cy="262" r="6"
+          fill="white"
         />
       </svg>
     </div>
