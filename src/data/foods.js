@@ -38,6 +38,8 @@ export const foods = [
     },
     rotation: 6,
     sound: 'pop',
+    fedMessage: 'Broccoli makes you strong!',
+    girlHappyImg: 'girl-happy-broccoli.png',
   },
   {
     id: 'chips',
@@ -59,6 +61,8 @@ export const foods = [
     nudgeX: '10px',
     nudgeY: '-10px',
     sound: 'crisp',
+    fedMessage: 'A crunchy treat!',
+    girlHappyImg: 'girl-happy-chips.png',
   },
   {
     id: 'icecream',
@@ -80,5 +84,7 @@ export const foods = [
     nudgeX: '-10px',
     nudgeY: '-10px',
     sound: 'chime',
+    fedMessage: 'A sweet treat!',
+    girlHappyImg: 'girl-happy-icecream.png',
   },
 ]
