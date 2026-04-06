@@ -3,15 +3,17 @@ import { foods } from './data/foods'
 import { playSound } from './utils/sounds'
 import FoodItem from './components/FoodItem'
 import InfoPanel from './components/InfoPanel'
+import ThoughtBubble from './components/ThoughtBubble'
 import './App.css'
 
 const imageFoods = foods.filter(f => f.staticImg && f.animatedImg)
 const HEARTS = 6
 
 export default function App() {
-  const [hoveredId, setHoveredId]   = useState(null)
-  const [dragState, setDragState]   = useState(null) // { foodId, x, y }
-  const [fedState,  setFedState]    = useState(null) // { foodId } | null
+  const [hoveredId, setHoveredId]     = useState(null)
+  const [dragState, setDragState]     = useState(null) // { foodId, x, y }
+  const [fedState,  setFedState]      = useState(null) // { foodId } | null
+  const [hasInteracted, setHasInteracted] = useState(false)
 
   const activeFood = foods.find(f => f.id === hoveredId) ?? null
   const dragFood   = dragState ? (foods.find(f => f.id === dragState.foodId) ?? null) : null
@@ -28,6 +30,7 @@ export default function App() {
     const food = foods.find(f => f.id === id)
     if (food) playSound(food.sound)
     setHoveredId(id)
+    setHasInteracted(true)
   }, [])
 
   const handleLeave = useCallback(() => {
@@ -116,6 +119,8 @@ export default function App() {
       )}
 
       <div className="stage">
+
+        <ThoughtBubble visible={!hasInteracted} />
 
         {/* Girl — normal state */}
         <img
