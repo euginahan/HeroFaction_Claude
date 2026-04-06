@@ -1,9 +1,10 @@
-/* ── Thought bubble wrapper ──────────────────────── */
-/* Positioned in .stage (absolute context), near girl's head-right */
+/* ── Thought bubble wrapper ──────────────────────────────── */
+/* Positioned inside .stage. top-right of girl's head.
+   Connector dots trail down-left toward her head (centered). */
 .thought-wrap {
   position: absolute;
-  top: 6%;
-  left: 56%;
+  top: 2%;
+  left: 48%;
   z-index: 12;
   pointer-events: none;
   opacity: 1;
@@ -14,40 +15,37 @@
   opacity: 0;
 }
 
-/* ── Main cloud bubble ───────────────────────────── */
-.thought-main {
-  background: rgba(255, 253, 250, 0.96);
-  border-radius: 50px;
-  padding: 14px 20px;
-  max-width: 210px;
-  box-shadow:
-    0 4px 18px rgba(0, 0, 0, 0.12),
-    0 1px 4px rgba(0, 0, 0, 0.07);
-  text-align: center;
+/* ── SVG cloud ──────────────────────────────────────────── */
+.thought-svg {
+  width: 190px;
+  height: auto;
+  /* Lifts cloud from background without overpowering */
+  filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.22));
 }
 
-.thought-text {
-  font-family: 'bc-civitas', 'Georgia', serif;
-  font-size: 15px;
-  color: #555;
-  line-height: 1.45;
+/* ── Text inside cloud ──────────────────────────────────── */
+.thought-text-svg {
+  font-family: 'bc-civitas', Georgia, serif;
+  font-size: 13px;
+  fill: #333;
+  font-weight: normal;
 }
 
-/* ── Trailing dots — blink in sequence toward girl ── */
+/* ── Connector dot animation ────────────────────────────── */
+/* Each dot pulses: opacity 0.6→1, scale 0.9→1.1 in sequence.
+   transform-box + transform-origin ensure scale is from each
+   circle's own center, not the SVG origin.                  */
 .thought-dot {
-  position: absolute;
-  background: rgba(255, 253, 250, 0.96);
-  border-radius: 50%;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
-  animation: thought-pulse 1.3s ease-in-out infinite;
+  animation: tb-dot-pulse 1.3s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
 }
 
-/* Dots cascade from bubble bottom-left toward girl's head */
-.thought-dot-1 { width: 13px; height: 13px; top: calc(100% + 6px);  left: 10px;  animation-delay: 0s;    }
-.thought-dot-2 { width: 9px;  height: 9px;  top: calc(100% + 24px); left: -4px;  animation-delay: 0.22s; }
-.thought-dot-3 { width: 6px;  height: 6px;  top: calc(100% + 38px); left: -14px; animation-delay: 0.44s; }
+.thought-dot-1 { animation-delay: 0s;    }
+.thought-dot-2 { animation-delay: 0.25s; }
+.thought-dot-3 { animation-delay: 0.5s;  }
 
-@keyframes thought-pulse {
-  0%, 100% { opacity: 0.35; transform: scale(0.88); }
-  50%       { opacity: 1;    transform: scale(1);    }
+@keyframes tb-dot-pulse {
+  0%, 100% { opacity: 0.6;  transform: scale(0.9);  }
+  50%       { opacity: 1.0;  transform: scale(1.1);  }
 }
