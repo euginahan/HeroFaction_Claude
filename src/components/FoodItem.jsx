@@ -31,7 +31,7 @@ export default function FoodItem({ food, isHovered, isOtherHovered, fullDim, onH
   return (
     <div
       className={`food-item ${hasImages ? 'has-img' : ''} ${isHovered ? 'is-hovered' : ''} ${fullDim ? 'is-hidden' : isOtherHovered ? 'is-dimmed' : ''}`}
-      style={{ '--rotation': `${food.rotation}deg`, '--glow': food.colors.glow }}
+      style={{ '--rotation': `${food.rotation}deg`, '--glow': food.colors.glow, '--nudge-x': food.nudgeX ?? '0px', '--nudge-y': food.nudgeY ?? '0px' }}
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
     >

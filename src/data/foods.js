@@ -54,6 +54,8 @@ export const foods = [
       bg: 'rgba(255, 248, 192, 0.6)',
     },
     rotation: -4,
+    nudgeX: '10px',
+    nudgeY: '-10px',
     sound: 'crisp',
   },
   {
@@ -73,6 +75,8 @@ export const foods = [
       bg: 'rgba(245, 230, 255, 0.6)',
     },
     rotation: 7,
+    nudgeX: '-10px',
+    nudgeY: '-10px',
     sound: 'chime',
   },
 ]

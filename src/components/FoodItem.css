@@ -5,7 +5,7 @@
   justify-content: center;
   width: 110px;
   height: 110px;
-  transform: rotate(var(--rotation));
+  transform: translate(var(--nudge-x, 0px), var(--nudge-y, 0px)) rotate(var(--rotation));
   transition: transform 450ms ease-out, opacity 450ms ease-out;
   cursor: pointer;
   user-select: none;
@@ -29,12 +29,12 @@
 /* ── Shared hover states ─────────────────────────── */
 .food-item.is-dimmed {
   opacity: 0.3;
-  transform: rotate(var(--rotation)) scale(0.88);
+  transform: translate(var(--nudge-x, 0px), var(--nudge-y, 0px)) rotate(var(--rotation)) scale(0.88);
 }
 
 .food-item.is-hidden {
   opacity: 0;
-  transform: rotate(var(--rotation)) scale(0.88);
+  transform: translate(var(--nudge-x, 0px), var(--nudge-y, 0px)) rotate(var(--rotation)) scale(0.88);
   pointer-events: none;
 }
 
