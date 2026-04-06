@@ -54,23 +54,25 @@ export default function ThoughtBubble({ visible }) {
           feed it to me!
         </text>
 
-        {/* ── Connector circles — gentle curved arc from cloud toward girl ──
-            Sizes reduced ~35%. Irregular gaps (small then larger) and
-            middle dot nudged right break the straight-line look.
-            No stroke — drop-shadow from SVG provides definition.      */}
+        {/* ── Connector circles — organic curved arc, cloud → girl's head ──
+            Horizontal: each dot shifts +8px right from the one below,
+            creating a gentle rightward arc rather than a vertical line.
+            Vertical: edge-gaps increase (14px → 22px) for uneven spacing.
+            Slight cy nudges (±2px) on middle and top remove ruler stiffness.
+            Radii: 14 / 11 / 8 — subtle hierarchy, not exaggerated.      */}
         <circle
           className="thought-dot thought-dot-1"
-          cx="120" cy="170" r="14"
+          cx="104" cy="177" r="14"
           fill="white"
         />
         <circle
           className="thought-dot thought-dot-2"
-          cx="108" cy="212" r="9"
+          cx="96" cy="222" r="11"
           fill="white"
         />
         <circle
           className="thought-dot thought-dot-3"
-          cx="88" cy="262" r="6"
+          cx="88" cy="257" r="8"
           fill="white"
         />
       </svg>
