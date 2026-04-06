@@ -38,6 +38,7 @@ export const foods = [
     },
     rotation: 6,
     sound: 'pop',
+    nameFontSize: '77px',
     fedMessage: 'Broccoli makes you strong!',
     girlHappyImg: 'girl-happy-broccoli.png',
   },

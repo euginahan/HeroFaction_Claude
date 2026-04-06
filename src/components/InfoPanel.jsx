@@ -11,7 +11,7 @@ export default function InfoPanel({ food, fedMessage, fedColor }) {
       <div className={`info-panel info-top ${topVisible ? 'info-visible' : ''}`}>
         <span
           className={`info-name ${fedVisible ? 'info-fed' : ''}`}
-          style={{ color: fedVisible ? fedColor : food?.colors.primary }}
+          style={{ color: fedVisible ? fedColor : food?.colors.primary, fontSize: (!fedVisible && food?.nameFontSize) ? food.nameFontSize : undefined }}
         >
           {fedVisible ? fedMessage : food?.name}
         </span>
