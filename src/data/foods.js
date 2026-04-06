@@ -59,6 +59,8 @@ export const foods = [
   {
     id: 'icecream',
     emoji: '🍦',
+    staticImg: 'icecream-static.png',
+    animatedImg: 'icecream-alive.png',
     name: 'Ice Cream',
     fact: 'Sweet and fun!',
     recommendation: 'A treat, not every day!',
