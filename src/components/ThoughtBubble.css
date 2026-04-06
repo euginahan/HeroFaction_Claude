@@ -1,10 +1,10 @@
 /* ── Thought bubble wrapper ──────────────────────────────── */
-/* Positioned inside .stage. top-right of girl's head.
-   Connector dots trail down-left toward her head (centered). */
+/* Pushed right so bubble floats beside the girl, not on top.
+   Connector dots trail down-left toward her head (center).   */
 .thought-wrap {
   position: absolute;
   top: 2%;
-  left: 48%;
+  left: 56%;
   z-index: 12;
   pointer-events: none;
   opacity: 1;
@@ -16,25 +16,27 @@
 }
 
 /* ── SVG cloud ──────────────────────────────────────────── */
+/* No outline — two layered shadows: depth + subtle edge definition */
 .thought-svg {
-  width: 190px;
+  width: 215px;
   height: auto;
-  /* Lifts cloud from background without overpowering */
-  filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.22));
+  filter:
+    drop-shadow(0 5px 18px rgba(0, 0, 0, 0.28))
+    drop-shadow(0 1px 4px  rgba(0, 0, 0, 0.18));
 }
 
 /* ── Text inside cloud ──────────────────────────────────── */
 .thought-text-svg {
   font-family: 'bc-civitas', Georgia, serif;
-  font-size: 13px;
-  fill: #333;
+  font-size: 17px;
+  fill: #222;
   font-weight: normal;
 }
 
 /* ── Connector dot animation ────────────────────────────── */
-/* Each dot pulses: opacity 0.6→1, scale 0.9→1.1 in sequence.
-   transform-box + transform-origin ensure scale is from each
-   circle's own center, not the SVG origin.                  */
+/* Circles pulse: opacity 0.6→1, scale 0.9→1.1, staggered.
+   transform-box + transform-origin make scale from each
+   circle's own center.                                      */
 .thought-dot {
   animation: tb-dot-pulse 1.3s ease-in-out infinite;
   transform-box: fill-box;
@@ -46,6 +48,6 @@
 .thought-dot-3 { animation-delay: 0.5s;  }
 
 @keyframes tb-dot-pulse {
-  0%, 100% { opacity: 0.6;  transform: scale(0.9);  }
-  50%       { opacity: 1.0;  transform: scale(1.1);  }
+  0%, 100% { opacity: 0.65; transform: scale(0.92); }
+  50%       { opacity: 1.0;  transform: scale(1.10); }
 }
