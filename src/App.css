@@ -237,18 +237,18 @@
 
 /* Per-food size overrides — accounts for PNG canvas padding differences */
 .alive-broccoli {
-  width: 264px;
-  height: 264px;
+  width: 350px;
+  height: 350px;
 }
 
 .alive-chips {
-  width: 230px;
-  height: 230px;
+  width: 310px;
+  height: 310px;
 }
 
 .alive-icecream {
-  width: 210px;
-  height: 210px;
+  width: 290px;
+  height: 290px;
 }
 
 @keyframes apple-wave {
@@ -288,9 +288,9 @@
   animation: drag-sway 0.7s ease-in-out infinite alternate;
 }
 
-.drag-ghost-broccoli { width: 260px; height: 260px; }
-.drag-ghost-chips    { width: 230px; height: 230px; }
-.drag-ghost-icecream { width: 210px; height: 210px; }
+.drag-ghost-broccoli { width: 350px; height: 350px; }
+.drag-ghost-chips    { width: 310px; height: 310px; }
+.drag-ghost-icecream { width: 290px; height: 290px; }
 
 @keyframes drag-sway {
   from { transform: translate(-50%, -50%) scale(1.1) rotate(-4deg); }
