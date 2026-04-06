@@ -1,9 +1,11 @@
-/* ── Thought bubble wrapper ──────────────────────── */
-/* Positioned in .stage (absolute context), near girl's head-right */
+/* ── Thought bubble wrapper ──────────────────────────────────── */
+/* Positioned inside .stage (absolute context). Sits to the upper-right
+   of the girl so the tail circles point down-left toward her head.   */
 .thought-wrap {
   position: absolute;
-  top: 6%;
-  left: 56%;
+  top: 3%;
+  left: 50%;
+  width: 240px;
   z-index: 12;
   pointer-events: none;
   opacity: 1;
@@ -14,40 +16,80 @@
   opacity: 0;
 }
 
-/* ── Main cloud bubble ───────────────────────────── */
-.thought-main {
-  background: rgba(255, 253, 250, 0.96);
-  border-radius: 50px;
-  padding: 14px 20px;
-  max-width: 210px;
-  box-shadow:
-    0 4px 18px rgba(0, 0, 0, 0.12),
-    0 1px 4px rgba(0, 0, 0, 0.07);
-  text-align: center;
+/* ── PNG asset ──────────────────────────────────────────────── */
+.thought-img {
+  display: block;
+  width: 240px;     /* 1200 ÷ 5 */
+  height: 248px;    /* 1239 ÷ 5 */
+  object-fit: contain;
+  filter: drop-shadow(0 3px 10px rgba(0, 0, 0, 0.15));
+}
+
+/* ── Text overlay — centered in the upper cloud region ─────── */
+/* Cloud occupies roughly the top 60% of the image.
+   Text sits centered at ~35% down, with horizontal padding.    */
+.thought-text-overlay {
+  position: absolute;
+  top: 14%;
+  left: 12%;
+  right: 12%;
+  height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .thought-text {
   font-family: 'bc-civitas', 'Georgia', serif;
-  font-size: 15px;
-  color: #555;
+  font-size: 14px;
+  color: #444;
   line-height: 1.45;
+  text-align: center;
 }
 
-/* ── Trailing dots — blink in sequence toward girl ── */
-.thought-dot {
+/* ── Animated pulse dots — layered over the drawn tail circles ─ */
+/* Image circles at 1200×1239:
+     medium  ~(655, 795) radius ~70   → 54.6%, 64.2%, r=5.8%
+     small   ~(510, 915) radius ~45   → 42.5%, 73.8%, r=3.8%
+     tiny    ~(420,1015) radius ~35   → 35.0%, 82.0%, r=2.9%
+   All percentages of 240×248px rendered size.                   */
+.thought-anim-dot {
   position: absolute;
-  background: rgba(255, 253, 250, 0.96);
   border-radius: 50%;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
-  animation: thought-pulse 1.3s ease-in-out infinite;
+  background: rgba(255, 252, 245, 0.85);
+  animation: dot-pulse 1.3s ease-in-out infinite;
 }
 
-/* Dots cascade from bubble bottom-left toward girl's head */
-.thought-dot-1 { width: 13px; height: 13px; top: calc(100% + 6px);  left: 10px;  animation-delay: 0s;    }
-.thought-dot-2 { width: 9px;  height: 9px;  top: calc(100% + 24px); left: -4px;  animation-delay: 0.22s; }
-.thought-dot-3 { width: 6px;  height: 6px;  top: calc(100% + 38px); left: -14px; animation-delay: 0.44s; }
+/* medium tail circle */
+.thought-anim-dot-1 {
+  width:  28px;
+  height: 28px;
+  top:  calc(64.2% - 14px);
+  left: calc(54.6% - 14px);
+  animation-delay: 0s;
+}
 
-@keyframes thought-pulse {
-  0%, 100% { opacity: 0.35; transform: scale(0.88); }
-  50%       { opacity: 1;    transform: scale(1);    }
+/* small tail oval */
+.thought-anim-dot-2 {
+  width:  18px;
+  height: 18px;
+  top:  calc(73.8% - 9px);
+  left: calc(42.5% - 9px);
+  animation-delay: 0.25s;
+}
+
+/* tiny tail oval */
+.thought-anim-dot-3 {
+  width:  14px;
+  height: 14px;
+  top:  calc(82.0% - 7px);
+  left: calc(35.0% - 7px);
+  animation-delay: 0.5s;
+}
+
+@keyframes dot-pulse {
+  0%   { opacity: 0.3; transform: scale(0.85); }
+  40%  { opacity: 0.9; transform: scale(1.08); }
+  70%  { opacity: 0.9; transform: scale(1);    }
+  100% { opacity: 0.3; transform: scale(0.85); }
 }
