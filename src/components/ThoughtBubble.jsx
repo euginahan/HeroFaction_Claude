@@ -62,12 +62,12 @@ export default function ThoughtBubble({ visible }) {
             Radii: 14 / 11 / 8 — subtle hierarchy, not exaggerated.      */}
         <circle
           className="thought-dot thought-dot-1"
-          cx="104" cy="177" r="14"
+          cx="116" cy="177" r="14"
           fill="white"
         />
         <circle
           className="thought-dot thought-dot-2"
-          cx="96" cy="222" r="11"
+          cx="102" cy="220" r="11"
           fill="white"
         />
         <circle
