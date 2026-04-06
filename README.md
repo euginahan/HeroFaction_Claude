@@ -7,7 +7,8 @@ Live URL: https://euginahan.github.io/HeroFaction_Claude/
 
 ## Design Intent
 
-**Written before AI engagement — Session 2, Wed March 25, 2026**
+**Originally written before AI engagement — Session 2, Wed March 25, 2026**
+*Updated to reflect final implementation — Session 5, April 6, 2026*
 
 ### Concept
 A playful, educational food world designed for young children (ages 5–7). The experience centers around a child interacting with different food characters, each representing a "faction" of nutrition (healthy vs. treat foods). The world feels bright, friendly, and slightly animated — like a children's learning app or interactive storybook.
@@ -18,12 +19,12 @@ A playful, educational food world designed for young children (ages 5–7). The 
 
 ### Characters (4 Foods)
 
-| Character | Role | Fun Fact | Recommendation |
-|-----------|------|----------|----------------|
-| Apple | Healthy / energy / strong body | "Gives you energy to play!" | "Great anytime snack!" |
-| Broccoli | Healthy / growth / vitamins | "Helps you grow strong!" | "Eat often to stay healthy!" |
-| Chips | Treat / occasional food | "Crunchy and yummy!" | "Enjoy sometimes!" |
-| Ice Cream | Treat / fun but not everyday | "Sweet and fun!" | "A treat, not every day!" |
+| Character | Role | Fun Fact | Recommendation | Fed Message |
+|-----------|------|----------|----------------|-------------|
+| Apple | Healthy / energy / strong body | "Gives you energy to play!" | "Great anytime snack!" | "An apple a day!" |
+| Broccoli | Healthy / growth / vitamins | "Helps you grow strong!" | "Eat often to stay healthy!" | "Broccoli makes you strong!" |
+| Chips | Treat / occasional food | "Crunchy and yummy!" | "Enjoy sometimes!" | "A crunchy treat!" |
+| Ice Cream | Treat / fun but not everyday | "Sweet and fun!" | "A treat, not every day!" | "A sweet treat!" |
 
 ---
 
@@ -31,28 +32,32 @@ A playful, educational food world designed for young children (ages 5–7). The 
 
 No food is pre-selected at load. The scene is calm and inviting — storybook-like.
 
-**Background scene:**
-- Warm-toned interior wall
-- Window with trees visible outside
-- Yellow curtains framing the window
-- Couch in the background
-- Simple family painting on the wall
+**Background:**
+- `kitchen.jpg` — a warm, cozy kitchen photograph provided as a background asset, set as the scene's full-viewport background image
+- A color overlay (`mix-blend-mode: soft-light`) sits above it and shifts to each food's highlight color on hover, tinting the kitchen environment without obscuring it
 
-**Child character:** A small girl with black hair in pigtails, bow, and pink t-shirt. Soft smile. Style: rounded soft 3D/cartoon — big expressive eyes, friendly proportions. Use a placeholder initially; final must match this polished character style.
+**Child character:** A seated girl illustration with black hair in pigtails, bow, and pink shirt — polished soft-3D/cartoon style. Provided as a PNG with transparent background (`girl.png`). Positioned center-stage, anchored at `bottom: 0` so she sits on the same floor plane as the table. A warm drop-shadow is applied via CSS (`filter: drop-shadow`) to match the kitchen's right-side lighting.
 
 **Table:**
-- Soft brown wooden texture
-- A plate centered in front of the child
-- Fork on the left, spoon on the right
-- 4 foods arranged naturally on the plate in a 2×2 layout (slight rotation, not rigid)
+- CSS-built wooden surface with a warm brown gradient and 12° perspective tilt
+- A circular plate centered in front of the child — white radial-gradient disc with off-white ring
+- Fork + knife (🍴) on the left, spoon (🥄) on the right — both at 64px, proportional to the plate
+- 4 food characters arranged in a 2×2 grid with per-food rotation and nudge offsets
+
+**Bench:**
+- CSS-built wooden bench visible behind the table, same warm gradient family and perspective tilt
+- Layered so it appears behind the table but in front of the background, grounding the girl in the scene
 
 ---
 
 ### Layout
 
-**Scene:** Cozy home interior. Child sits center as the permanent focal point, table in front.
+**Scene:** Kitchen photograph as background. A `.stage` container (`min(700px, 92vw)` wide, `88vh` tall) acts as a shared absolute-positioning context. The girl, bench, and table all anchor at `bottom: 0` — sharing one floor plane without flex margin hacks.
 
-**Food arrangement:** 2×2 grid on the plate/table, styled naturally — slight rotation and organic spacing so it feels like real food placement, not a rigid CSS grid. Child stays center anchor at all times.
+**Z-index stack (back to front):**
+- Kitchen background (0) → color overlay (1) → bench (5) → girl (6) → table (7) → info panels (10) → thought bubble (12) → drag ghost (200)
+
+**Food arrangement:** 2×2 CSS grid on the plate. Each food has a `rotation` value and optional `nudgeX`/`nudgeY` offsets defined in `foods.js` for organic, non-rigid placement.
 
 ---
 
@@ -60,84 +65,100 @@ No food is pre-selected at load. The scene is calm and inviting — storybook-li
 
 **Apple**
 - Primary: `#F46F6F`
-- Light highlight: `#FFD4CE`
+- Highlight: `#FFD4CE`
 - Shadow: `#BD3E44`
-- Deep accent: `#440000`
-- Hover glow: `#FF8281`
+- Accent: `#440000`
+- Glow: `#FF8281`
 
 **Broccoli**
 - Primary: `#50A846`
-- Secondary: `#2B8827`
-- Rich green: `#006702`
-- Dark base: `#004800`
+- Highlight: `#C8EAC6`
+- Shadow: `#006702`
+- Accent: `#004800`
+- Glow: `#7BC67A`
 
 **Chips**
-- Primary yellow: `#E5E16A`
-- Light warm: `#FFC6A4`
-- Accent orange: `#F88F70`
-- Shadow: `#BB5B3F`
+- Primary: `#E5E16A`
+- Highlight: `#FFF8C0`
+- Shadow: `#F88F70`
+- Accent: `#BB5B3F`
+- Glow: `#F0ED8A`
 
 **Ice Cream**
-- Lavender base: `#D5AEE4`
-- Pink accent: `#FFACD8`
-- Soft blush: `#FFB0BB`
-- Peach highlight: `#FFBF96`
+- Primary: `#D5AEE4`
+- Highlight: `#F5E6FF`
+- Shadow: `#FFB0BB`
+- Accent: `#FFBF96`
+- Glow: `#E8D0F5`
 
 ---
 
 ### Typography
 
 **Headers / Food Names:** Atop — custom local typeface, bold and playful, child-friendly character
-- Size: 88px
+- Default size: 88px
+- Exception: Broccoli food name rendered at 77px (87.5%) — the longer fed phrase required slight scaling for visual balance
 - Loaded locally via `@font-face` from `src/assets/Atop.ttf` — no external dependency
-- No fallback (intentional — Atop is always available as a bundled asset)
-- Styled as a **sticker/outline**: thick white stroke (~10px) follows each letter's exact contour using `paint-order: stroke fill`. The stroke paints behind the fill so the inner color stays clean. Subtle drop-shadow adds depth without a rectangular background.
+- Styled as a **sticker/outline**: thick white stroke (~10px) follows each letter's exact contour using `paint-order: stroke fill`. Stroke paints behind fill so inner color stays clean. Subtle drop-shadow adds depth.
 - Text is treated as a visual object — integrated into the illustrated scene, not a flat overlay.
 
 **Note labels (Fun Fact / Remember):** Atop at 17px — consistent with header family at smaller scale
 
 **Body / Fun Facts + Recommendations:** BC Civitas (Briefcase Type) — clean, readable, slightly softer serif
 - Size: 19px
-- No fallback (Adobe Fonts kit loaded in index.html)
+- Loaded via Adobe Fonts kit in `index.html`
+
+**Onboarding bubble text:** BC Civitas at 17px, color `#222`
 
 _Typography rationale: treating headers as sticker-style visual objects rather than flat text improves readability against complex illustrated backgrounds while reinforcing the playful, character-driven aesthetic._
 
 ---
 
+### Onboarding Hint
+
+A thought bubble appears on initial load, positioned to the upper right of the girl's head.
+
+**Structure:**
+- Main cloud: inline SVG — 10 overlapping circles merged via `feGaussianBlur` + `feColorMatrix` alpha threshold into one clean irregular cloud shape. No stroke — defined by layered CSS `drop-shadow`.
+- Text inside cloud: *"Pick a food and feed it to me!"* in BC Civitas, 17px, `#222`
+- 3 connector circles trail in a gentle diagonal arc from the cloud base toward the girl's head, decreasing in size (r=14 → 11 → 8) with increasing horizontal offset
+
+**Animation:**
+- Each connector circle pulses independently (staggered 0 / 0.25 / 0.5s, 1.3s loop, `ease-in-out`)
+- Opacity depth: closest to bubble 100%, middle 85%, closest to head 70%
+- Entire bubble fades out permanently after the first successful drag-and-feed
+
+---
+
 ### Hover Behavior
 
-**Transition timing:** 400–500ms, `ease-out`. Background shift slightly slower (~500ms). Nothing abrupt.
+**Transition timing:** 400–500ms, `ease-out`. Background overlay shift ~500ms. Nothing abrupt.
 
 When a food is hovered:
-- Background **shifts to the food's color palette** (~500ms)
-- **Text appears in separate screen areas** (fades in on hover, fades out on leave, never overlaps child or food):
-  - Top center → Food name
-  - Left side → Fun fact
-  - Right side → Recommendation
-- **Sound plays on hover** (short, subtle, non-overlapping):
+- Background shifts to the food's highlight color via the soft-light overlay
+- Info panels fade in at 450ms `ease-out`:
+  - Top center → Food name (Atop sticker style, food's primary color)
+  - Left → Fun Fact (cream paper note card, tape strip, slight counter-clockwise rotation)
+  - Right → Recommendation (pink paper note card, torn bottom edge, slight clockwise rotation)
+- Sound plays on hover start (Web Audio API — no audio files):
   - Apple → soft crunch
   - Broccoli → light pop/boing
   - Chips → crispy crunch
   - Ice Cream → soft playful chime
 
-**For emoji-based foods (Broccoli, Chips, Ice Cream — until image assets are added):**
-- Selected food scales up (1.3×) with glow drop-shadow
-- Other foods fade to ~30% opacity and slightly shrink (0.88×)
-- Selected food gets a CSS animated face (dot eyes + smile, eyes blink)
-
-**For image-based foods (Apple — others added one at a time as assets are ready):**
-- Idle: static PNG illustration, same 110×110 footprint as emoji foods, centered in its grid cell
+**All 4 foods use the image-based interaction system (fully implemented):**
+- Idle: static PNG in its 2×2 grid cell
 - On hover:
-  - Smooth 250ms crossfade from static → animated "alive" character PNG
-  - Animated version lifts out of the grid and **centers on the plate** at **1.25× scale**
-  - Subtle wave + bounce CSS animation plays 2× on the alive character
-  - Soft shadow grounds the character on the plate
-  - All other foods **fade to 0% opacity** (fully hidden)
-  - Crunch sound triggers on hover start
+  - 75ms debounce prevents flicker from cursor jitter
+  - 250ms crossfade from static → animated "alive" PNG
+  - Alive character lifts out of grid, centers on plate via `position: absolute` overlay
+  - Wave + bounce CSS animation plays 2 loops on the alive character
+  - Glow `drop-shadow` in the food's color
+  - All other foods fade to 0% opacity (fully hidden)
 - On hover-out:
   - 250ms crossfade back to static PNG
   - Other foods return to full opacity
-  - Apple returns to its grid cell position
+  - Food returns to grid cell
 
 _Assets used exactly as provided — no restyle or redraw. Only CSS animation applied._
 
@@ -145,34 +166,30 @@ _Assets used exactly as provided — no restyle or redraw. Only CSS animation ap
 
 ### Drag & Feed Interaction
 
-A second interaction layer built on top of hover — introduced food by food as assets are ready.
+Built on top of hover. Available for all 4 foods.
 
-**Trigger:** After hovering a food (alive state), the plate becomes a grab zone. Clicking and dragging the alive character picks it up.
+**Trigger:** After hovering a food (alive state), the plate becomes a drag zone. Click and drag picks up the alive character.
 
 **Drag behavior:**
-- A ghost image of the alive character follows the cursor smoothly
-- Ghost sways gently (CSS alternate animation) while being held
+- Ghost image of the alive character follows the cursor (`position: fixed`, centered on cursor)
+- Ghost sways gently (CSS `alternate` keyframe animation)
 - All plate foods remain hidden during drag
 - Cursor changes to `grabbing`
 
-**Drop zone:** The girl's upper body / head area (top 65% of her bounding box)
+**Drop zone:** Girl's upper body / head area — top 65% of her bounding box, detected via `getBoundingClientRect()`
 
 **On successful drop:**
-- Food ghost fades out
-- Girl crossfades (~250ms) to her food-specific happy/eating version
-- 6 floating hearts animate above her head (staggered, float up + fade)
-- Header text changes to a food-specific message (same Atop sticker-outline style, pop-in animation)
-- Left/right info panels fade out
+- Ghost fades out
+- Girl crossfades to her food-specific happy illustration
+- 6 hearts float and fade above her head (staggered timing, `heart-float` keyframe)
+- Fed message pops in with spring animation (Atop sticker style, food's primary color)
+- Info panels fade out
+- Thought bubble fades out permanently (first feed only)
 
-**Auto-reset:** After ~2.6 seconds everything returns to the default state
+**Auto-reset:** After 2.6 seconds, all state returns to default
 
-**Per-food messages:**
-- Apple → "An apple a day!"
-- Broccoli → "Broccoli makes you strong!" *(asset pending)*
-- Chips → "A crunchy treat!" *(asset pending)*
-- Ice Cream → "A sweet treat!" *(asset pending)*
-
-**Per-food girl states:** Each food will have its own happy-girl illustration. Currently only apple is implemented (`girl-happy-apple.png`). Others will be added as assets are provided.
+**Per-food assets (all complete):**
+- `girl-happy-apple.png` / `girl-happy-broccoli.png` / `girl-happy-chips.png` / `girl-happy-icecream.png`
 
 ---
 
