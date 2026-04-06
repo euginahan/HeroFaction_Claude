@@ -186,11 +186,53 @@ A second interaction layer built on top of hover — introduced food by food as 
 
 ## Mermaid Diagram
 
-> _System flow diagram to be added._
+```mermaid
+flowchart TD
+    LOAD([Page Load]) --> DEFAULT
+    DEFAULT["Default State — all 4 foods on plate · thought bubble visible"]
+    DEFAULT --> HOVER{User hovers a food}
+    HOVER --> ALIVE["Alive image fades in centered on plate · siblings → 0% opacity · background color shifts · info panels appear · sound plays"]
+    ALIVE --> GRAB["Plate becomes drag zone · cursor → grab"]
+    GRAB --> DQ{Click and drag?}
+    DQ -->|No — leave hover| DEFAULT
+    DQ -->|Yes| DRAGGING["Ghost image follows cursor · all foods hidden · cursor → grabbing"]
+    DRAGGING --> DROP{Drop on girl?}
+    DROP -->|Miss| DEFAULT
+    DROP -->|"Hit upper 65% of body"| FED["Girl → food-specific happy image · 6 hearts float up · fed message in Atop font · thought bubble fades out permanently"]
+    FED --> TIMER["Auto-reset after 2.6s"]
+    TIMER --> DEFAULT
+```
 
 ---
 
 ## AI Direction Log
+
+**Entry 7 — Thought bubble onboarding system (Session 5, April 6, 2026)**
+- **Asked:** Add an onboarding hint bubble near the girl's head. Went through multiple rounds: first a CSS rounded cloud, then using the provided hand-drawn PNG asset, then a full SVG rebuild from circles using a blob-merge filter, then iterative refinements to position, size, stroke weight, connector circle spacing, arc shape, and opacity depth.
+- **Produced:** Inline SVG component (`ThoughtBubble.jsx`) — 10 overlapping circles merged via `feGaussianBlur` + `feColorMatrix` threshold filter into a single clean cloud shape. Three connector circles trail in a diagonal arc toward the girl's head with staggered pulse animation and depth opacity (70/85/100%). BC Civitas text centered in cloud. Fades out permanently after first successful feed.
+- **Kept:** SVG blob-merge approach for the cloud shape, separate keyframe animations per connector dot for opacity variation, `hasInteracted` state to control visibility.
+- **Note:** This section required the most iteration of any feature — see Records of Resistance.
+
+**Entry 6 — UI polish: utensils, alive food calibration, header scaling (Session 5, April 6, 2026)**
+- **Asked:** Scale up utensils proportionally to the plate. Calibrate alive broccoli, chips, and ice cream to match the apple's visual presence. Reduce the broccoli fed-message header size slightly.
+- **Produced:** Utensils scaled from 28px → 64px. Per-food `nameFontSize` field added to `foods.js` and passed through `InfoPanel` for per-food text overrides. Alive overlay sizes increased ~133% for broccoli/chips/ice cream to compensate for extra transparent padding in those PNGs. Drag ghost sizes updated to match.
+- **Kept:** All values data-driven through `foods.js` — no hardcoded one-off overrides in components.
+
+**Entry 5 — Drag-and-feed interaction + all 4 foods complete (Session 5, April 6, 2026)**
+- **Asked:** Implement drag-and-feed for all foods. On hover, the plate becomes a grab zone. Dragging picks up the alive character as a ghost; dropping on the girl's upper body triggers a happy reaction, hearts, and a fed message. Auto-resets after 2.6s. Also: provide happy-girl assets for broccoli, chips, and ice cream to complete the full interaction loop.
+- **Produced:** Window-level `mousemove`/`mouseup` listeners track drag position. Drop detection uses `getBoundingClientRect()` on the girl image — checks if cursor lands in the upper 65% of her bounding box. `fedState` drives girl image swap, heart animation, and fed message. `girlHappyImg` and `fedMessage` fields added to all 4 food data entries.
+- **Kept:** Hover lock during drag (drag state blocks `handleLeave`). Auto-reset via `setTimeout`. Clean separation between hover, drag, and fed states.
+
+**Entry 4 — Food asset roll-out: Broccoli → Chips → Ice Cream (April 2–5, 2026)**
+- **Asked:** Add image assets for the remaining three foods one at a time as PNGs were provided. Each food needed its own size tuning — broccoli's alive overlay needed explicit upscaling immediately after introduction. Chips assets replaced a first-pass fries set entirely when the correct chip bag illustration arrived. Ice cream's first transparent-background PNG replaced an earlier version with a white fill.
+- **Produced:** Each food received `staticImg` + `animatedImg` fields in `foods.js`. Per-food `.alive-{id}` CSS overrides set correct overlay sizes accounting for different canvas padding in each PNG. The hybrid system introduced in Entry 2 (image path vs emoji path) handled all four foods without structural changes.
+- **Kept:** One food added at a time, matching the design intent's incremental rollout plan. Nudge offsets (`nudgeX`/`nudgeY`) added for chips and ice cream to center them visually on the plate.
+
+**Entry 3 — Girl asset introduction + scene grounding (Session 4, April 1, 2026)**
+- **Asked:** Replace the CSS geometric child placeholder with the provided illustrated girl PNG. Then replace the CSS-drawn room with a kitchen background photo. Recomposite the scene so the girl, bench, and table all share the same floor plane and feel grounded — not floating.
+- **Produced:** Six iterative commits to resolve the girl's placement: initial PNG swap → scale adjustment → chair-back removal → kitchen background introduction → perspective tilt on table/bench → bench addition → full layout rearchitecture. Final solution: `.stage` as a shared absolute-positioning context, all three elements (girl, bench, table) anchored at `bottom: 0` so they share a common floor plane. `z-index` layering: bench (5) behind table (7) behind girl (6) at front, producing a natural depth stack.
+- **Kept:** Absolute stage approach, `bottom: 0` floor anchoring, warm drop-shadow on girl for right-side kitchen light.
+- **Note:** The girl's floating issue required a full layout rearchitecture, not a simple position fix — the flex-based layout couldn't express a shared floor plane.
 
 **Entry 2 — Apple image assets + image-food system (Session 4, April 1, 2026)**
 - **Asked:** Replace emoji apple with provided static + animated PNGs. Crossfade 250ms, center alive apple on plate at 1.25× scale on hover, hide all siblings to 0%, wave+bounce animation 2 loops, crunch sound.
@@ -208,7 +250,27 @@ A second interaction layer built on top of hover — introduced food by food as 
 
 ## Records of Resistance
 
-> _3 documented moments where AI output was rejected or significantly revised._
+> _Documented moments where AI output was rejected or significantly revised._
+
+**Record 1 — The girl wouldn't stay on the ground**
+
+When I provided the illustrated girl PNG, the AI placed her correctly on screen but she looked like she was floating above the table rather than sitting at it. Scaling her up made it worse — the bench and table no longer read as the same surface she was sitting on. Multiple size adjustments didn't fix the root problem. It took six commits and a full layout rearchitecture before the scene felt grounded: the AI had to abandon the flex-based layout entirely and rebuild the positioning system so the girl, bench, and table all anchored from the same floor plane. I had to keep pushing back and pointing to the visual disconnect before it diagnosed the structural cause rather than patching symptoms.
+
+**Record 2 — Text and font styles needed repeated correction**
+
+The info panels showing food names, fun facts, and recommendations went through several rounds of visual rework. The first version rendered text as plain overlays with no visual treatment. I asked for improvement and got a rounded title bubble — which felt like a generic UI element, not consistent with the illustrated style. After another round I got paper note cards with a tape strip and torn edge, which matched the storybook aesthetic much better. The food name headers were then rebuilt again when the Atop font was introduced — switching from a filled text style to a sticker-outline treatment (white stroke, `paint-order: stroke fill`) so the headers read as part of the illustrated scene rather than floating labels. Each step was an improvement, but the style required persistent direction across multiple sessions before it matched the Design Intent.
+
+**Record 3 — Food asset sizes kept being wrong**
+
+As each food's PNG was introduced, the alive overlay size needed explicit correction. Broccoli was added at one size and immediately needed upscaling because its PNG had more transparent canvas padding than the apple — the actual food content was smaller than expected. The same issue recurred for chips and ice cream. Chips also required a full asset replacement: the first set of chip assets was a fries illustration rather than the chip bag specified in the design, and the whole set had to be swapped. Even after all four foods were in, a second calibration pass was needed to make broccoli, chips, and ice cream feel as visually present as the apple, which required increasing their overlay sizes by ~133%.
+
+**Record 4 — Thought bubble approach rejected twice**
+
+The first thought bubble was a CSS rounded rectangle with `border-radius: 50px`. I rejected it immediately — the prompt said cloud shape, not a pill button. The AI rebuilt it as an SVG using a blob-merge filter from overlapping circles, which was the right approach. Then I provided a hand-drawn PNG asset and asked it to use that instead. The AI used the PNG as the bubble image and tried to layer animated CSS circles on top of the drawn circles in the asset. I reverted this version immediately — the mismatch between the flat illustration and CSS animation overlays felt visually inconsistent, and the drawn circles in the PNG couldn't be animated independently. We returned to the SVG-built version and continued refining from there.
+
+**Record 5 — Connector circles took four rounds to feel natural**
+
+The three small connector circles trailing from the thought bubble toward the girl's head went through four explicit revision rounds. The first version had them spaced evenly in a straight vertical line. The second reduced their size but kept the mechanical spacing. The third introduced a curved arc but the positions still felt too calculated — the user gave exact pixel coordinates for where each circle should land. Even then, a fourth round adjusted the diagonal angle and equalized the spacing. The core problem was that the AI defaulted to geometrically regular arrangements whenever given a layout task, and "organic" required explicit overrides of every variable: x offset, y gap, size, opacity, and arc angle, all specified by hand.
 
 ---
 
