@@ -30,6 +30,7 @@ export default function App() {
     const food = foods.find(f => f.id === id)
     if (food) playSound(food.sound)
     setHoveredId(id)
+    setHasInteracted(true)
   }, [])
 
   const handleLeave = useCallback(() => {
@@ -64,7 +65,6 @@ export default function App() {
         const inY = e.clientY >= r.top  && e.clientY <= r.top + r.height * 0.65
         if (inX && inY) {
           setFedState({ foodId: drag.foodId })
-          setHasInteracted(true)
           clearTimeout(resetTimer.current)
           resetTimer.current = setTimeout(() => setFedState(null), 2600)
         }
